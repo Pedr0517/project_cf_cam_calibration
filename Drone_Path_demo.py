@@ -25,20 +25,9 @@ z_point = []
 
 ##Note, functions are to be used in any orientation, might have to adjust plus or minus in some lines
 
-# def right_left():
-#     for j in range(3):
-#                 x = horiz_dist
-#                 x_point.append(x)
-                
-#                 z = vtcl_ht
-#                 z_point.append(z)
-                
-#                 y = dist_away
-#                 y_point.append(y)
-                
-#                 horiz_dist -= horiz_dif# we subtract becuse we are moving right to left
 
-def drone_down(vtcl_ht,horiz_dist,num_photos,dist_away):
+
+def drone_down(vtcl_ht,horiz_dist,num_img,dist_away):
     ##ht_dif, refers to height_difference when drone moves through path
     ##vtcl_ht, refers to the height the drone will start at
     ##horiz_dist, refers to the horizontal distance the drone will cover through each session
@@ -48,13 +37,13 @@ def drone_down(vtcl_ht,horiz_dist,num_photos,dist_away):
     x_point = []
     y_point = []
     z_point = []
-    x_dist = np.linspace(horiz_dist,1,num_photos)
+    x_dist = np.linspace(horiz_dist,1,num_img)
     z_dist = np.linspace(vtcl_ht,0.5,3)
     
     
     for i in range(3):
         if i == 0:
-            for j in range(num_photos):
+            for j in range(num_img):
                
                 x = x_dist[j]
                 x_point.append(x)
@@ -68,7 +57,7 @@ def drone_down(vtcl_ht,horiz_dist,num_photos,dist_away):
                 #horiz_dist -= (x_dist/num_photos)# we subtract becuse we are moving right to left
                 
         if i == 1:
-            for j in range(1,num_photos+1):
+            for j in range(1,num_img+1):
                 #horiz_dist += (x_dist/num_photos)#we add becasue we are moving left to right
                 x = x_dist[-j]
                 x_point.append(x)
@@ -80,7 +69,7 @@ def drone_down(vtcl_ht,horiz_dist,num_photos,dist_away):
                 y_point.append(y)
     
         if i == 2:
-              for j in range(num_photos):
+              for j in range(num_img):
                   x = x_dist[j]
                   x_point.append(x)
                   
@@ -93,7 +82,7 @@ def drone_down(vtcl_ht,horiz_dist,num_photos,dist_away):
                  # horiz_dist -= (x_dist/num_photos)
     return x_point,y_point,z_point
 
-def drone_up(vtcl_ht,horiz_dist,num_photos,dist_away):
+def drone_up(vtcl_ht,horiz_dist,num_img,dist_away):
     
     dist_away = dist_away - 4##note, this is used in order to obtian images at a farther distance
     
@@ -101,13 +90,13 @@ def drone_up(vtcl_ht,horiz_dist,num_photos,dist_away):
     x_point_2 = []
     y_point_2 = []
     z_point_2 = []
-    x_dist = np.linspace(horiz_dist,1,num_photos)
+    x_dist = np.linspace(horiz_dist,1,num_img)
     z_dist = np.linspace(0.5,vtcl_ht,3)
 
     
     for i in range(3):
         if i == 0:
-            for j in range(1,num_photos+1):
+            for j in range(1,num_img+1):
                 x = x_dist[-j]
                 x_point_2.append(x)
                 
@@ -121,7 +110,7 @@ def drone_up(vtcl_ht,horiz_dist,num_photos,dist_away):
                 
                 
         if i == 1:
-            for j in range(num_photos):
+            for j in range(num_img):
                # horiz_dist -= (x_dist/num_photos)
                 x = x_dist[j]
                 x_point_2.append(x)
@@ -133,7 +122,7 @@ def drone_up(vtcl_ht,horiz_dist,num_photos,dist_away):
                 y_point_2.append(y)
     
         if i == 2:
-              for j in range(1,num_photos+1):
+              for j in range(1,num_img+1):
                   x = x_dist[-j]
                   x_point_2.append(x)
                   
@@ -147,16 +136,21 @@ def drone_up(vtcl_ht,horiz_dist,num_photos,dist_away):
     return x_point_2,y_point_2,z_point_2
               
 
-    
-            
-        
 
-x_data,y_data,z_data = drone_down(7,7,4,6)#we are calling our function with known values
+vtcl_ht = 7
+horiz_dist = 7
+num_img = 4
+dist_away = 6
+        
+x_data,y_data,z_data = drone_down(vtcl_ht,horiz_dist,num_img,dist_away)#we are calling our function with known values
+
 
 horiz_dist = x_data[0]#this allows us to know where the drone left off after finish its path
 vtcl_ht = z_data[0]#this allows us to know where the drone left off after finish its path
+num_img = 4
+dist_away = 6
 
-x_data_2,y_data_2,z_data_2 = drone_up(vtcl_ht,horiz_dist,4,6)#we are calling our function again, we do implement array slicing to obtain location of drone
+x_data_2,y_data_2,z_data_2 = drone_up(vtcl_ht,horiz_dist,num_img,dist_away)#we are calling our function again, we do implement array slicing to obtain location of drone
 
 #we are putting data together to obtain plot/sim of drone path
 x_plot = x_data + x_data_2
@@ -194,3 +188,8 @@ plt.show()
 
 print(points)
 
+
+
+#create fucntions that return a list of points when called
+#dont have seperate functions
+#change code slightly to meet requirements
