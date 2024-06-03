@@ -20,9 +20,7 @@ for drone_namespace in "${drone_namespaces[@]}"; do
   rosbag_cmd+=" /${drone_namespace}/platform/info \
                 /${drone_namespace}/self_localization/pose \
                 /${drone_namespace}/self_localization/twist \
-                /${drone_namespace}/actuator_command/twist \
-                /${drone_namespace}/sensor_measurements/gps \
-                /${drone_namespace}/sensor_measurements/odom"
+                /${drone_namespace}/actuator_command/twist"
 done
 
 # Add remaining topics

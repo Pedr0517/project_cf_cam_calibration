@@ -1,5 +1,9 @@
 #!/bin/python3
 
+"""
+mission.py
+"""
+
 from time import sleep
 import rclpy
 from as2_python_api.drone_interface import DroneInterface
@@ -14,13 +18,12 @@ def drone_run(drone_interface: DroneInterface):
 
     sleep_time = 2.0
 
-    dim = 2.0
+    dim = 1.0
     path = [
-        [dim, dim, height],
-        [dim, -dim, height],
         [-dim, dim, height],
         [-dim, -dim, height],
-        [0.0, 0.0, takeoff_height],
+        [dim, -dim, height],
+        [dim, dim, height]
     ]
 
     print("Start mission")
@@ -48,17 +51,16 @@ def drone_run(drone_interface: DroneInterface):
 
     ##### LAND #####
     print("Landing")
-    drone_interface.land(speed=0.3)
+    drone_interface.land(speed=0.5)
     print("Land done")
 
     drone_interface.disarm()
 
 
 if __name__ == '__main__':
-
     rclpy.init()
 
-    uav = DroneInterface(drone_id="drone0", verbose=False)
+    uav = DroneInterface("drone0", verbose=False, use_sim_time=True)
 
     drone_run(uav)
 
