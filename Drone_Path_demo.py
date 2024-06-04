@@ -48,7 +48,7 @@ def drone_down(vtcl_ht,horiz_dist,num_photos,dist_away):
     x_point = []
     y_point = []
     z_point = []
-    x_dist = np.linspace(horiz_dist,1,num_photos)
+    x_dist = np.linspace(horiz_dist,2,num_photos)
     z_dist = np.linspace(vtcl_ht,0.5,3)
     
     
@@ -101,7 +101,7 @@ def drone_up(vtcl_ht,horiz_dist,num_photos,dist_away):
     x_point_2 = []
     y_point_2 = []
     z_point_2 = []
-    x_dist = np.linspace(horiz_dist,1,num_photos)
+    x_dist = np.linspace(horiz_dist,2,num_photos)
     z_dist = np.linspace(0.5,vtcl_ht,3)
 
     
@@ -148,15 +148,21 @@ def drone_up(vtcl_ht,horiz_dist,num_photos,dist_away):
               
 
     
-            
+
+vtcl_ht = 7
+horiz_dist = 7
+num_photos = 4
+dist_away = 6
         
 
-x_data,y_data,z_data = drone_down(7,7,4,6)#we are calling our function with known values
+x_data,y_data,z_data = drone_down(vtcl_ht,horiz_dist,num_photos,dist_away)#we are calling our function with known values
 
 horiz_dist = x_data[0]#this allows us to know where the drone left off after finish its path
 vtcl_ht = z_data[0]#this allows us to know where the drone left off after finish its path
+num_phots = 4
+dist_away = 6
 
-x_data_2,y_data_2,z_data_2 = drone_up(vtcl_ht,horiz_dist,4,6)#we are calling our function again, we do implement array slicing to obtain location of drone
+x_data_2,y_data_2,z_data_2 = drone_up(vtcl_ht,horiz_dist,num_photos,dist_away)#we are calling our function again, we do implement array slicing to obtain location of drone
 
 #we are putting data together to obtain plot/sim of drone path
 x_plot = x_data + x_data_2
@@ -192,5 +198,5 @@ ax.scatter(board_x,board_y,board_z, color = "red")
 
 plt.show()
 
-print(points)
+# print(points)
 

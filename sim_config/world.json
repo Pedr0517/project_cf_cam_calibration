@@ -14,7 +14,28 @@
                 0,
                 0.0
             ],
-            "flight_time": 60
+            "flight_time": 60,
+            "payload": [
+                {
+                "model_name":"cam",
+                "model_type": "hd_camera"
+            	}	
+            ]
         }
+    ],
+    "objects": [
+    	{
+    		"model_type": "box",
+    		"model_name": "box_0",
+            "xyz":[
+                6,
+                9,
+                4
+            ]
+    	
+    
+    
+        }
+    
     ]
 }
