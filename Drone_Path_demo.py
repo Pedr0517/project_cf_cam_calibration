@@ -37,7 +37,7 @@ def drone_down(vtcl_ht,horiz_dist,num_img,dist_away):
     x_point = []
     y_point = []
     z_point = []
-    x_dist = np.linspace(horiz_dist,1,num_photos)
+    x_dist = np.linspace(horiz_dist,2,num_img)
     z_dist = np.linspace(vtcl_ht,0.5,3)
     
     
@@ -90,7 +90,7 @@ def drone_up(vtcl_ht,horiz_dist,num_img,dist_away):
     x_point_2 = []
     y_point_2 = []
     z_point_2 = []
-    x_dist = np.linspace(horiz_dist,1,num_photos)
+    x_dist = np.linspace(horiz_dist,1,num_img)
     z_dist = np.linspace(0.5,vtcl_ht,3)
 
     
