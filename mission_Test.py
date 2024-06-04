@@ -26,8 +26,8 @@ def drone_run(drone_interface: DroneInterface):
     # num_img = int(input("Énter number of images: "))
     # dist_away = int(input("Énter distance away relative to board: "))
 
-    vtcl_ht = 7
-    num_img = 3
+    vtcl_ht = 6
+    num_img = 4
     horiz_dist = horiz_path(8,3,num_img)#prior to running mission, edit x_max/x_min to desired reference axis
     dist_away = vert_path(4,4,num_img)#prior to running mission, edit y_max/y_min to desired reference axis
 
