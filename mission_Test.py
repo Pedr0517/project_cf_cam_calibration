@@ -7,7 +7,8 @@ mission.py
 from time import sleep
 import rclpy
 from as2_python_api.drone_interface import DroneInterface
-from Drone_Path_demo import points
+from drone_functions import get_points,path_plot
+from Drone_Path_demo import horiz_path,vert_path
 import numpy as np
 
 
@@ -19,7 +20,20 @@ def drone_run(drone_interface: DroneInterface):
     speed = 1.0
     takeoff_height = 1.0
     height = 1.0
-    data=points
+
+    # vtcl_ht = int(input("Énter verticle height: "))
+    # horiz_dist = int(input("Énter horizontal distance covered: "))
+    # num_img = int(input("Énter number of images: "))
+    # dist_away = int(input("Énter distance away relative to board: "))
+
+    vtcl_ht = 7
+    num_img = 3
+    horiz_dist = horiz_path(8,3,num_img)#prior to running mission, edit x_max/x_min to desired reference axis
+    dist_away = vert_path(4,4,num_img)#prior to running mission, edit y_max/y_min to desired reference axis
+
+    #path_plot(vtcl_ht,horiz_dist,num_img,dist_away)
+
+    data=get_points(vtcl_ht,horiz_dist,num_img,dist_away)
     angle_rad = (np.pi)/2
 
     sleep_time = 2.0
@@ -41,12 +55,13 @@ def drone_run(drone_interface: DroneInterface):
     print("Take Off")
     drone_interface.takeoff(takeoff_height, speed=1.0)
     print("Take Off done")
-    sleep(sleep_time)
+    sleep(1)
 
     ##### GO TO #####
     for goal in path:
-        print(f"Go to with path facing {goal}")
+        print(f"Go to path {goal}")
         drone_interface.go_to.go_to_point_with_yaw(goal, speed=speed,angle = angle_rad)
+        print("Take photo")
         sleep(sleep_time)
         print("Go to done")
     sleep(sleep_time)
