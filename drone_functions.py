@@ -68,8 +68,3 @@ def path_plot(vtcl_ht,horiz_dist,num_img,dist_away):
 
 
 
-# vtcl_ht = 7
-# num_img = 3
-# horiz_dist = horiz_path(5,5,num_img)#prior to running mission, edit x_max/x_min to desired reference axis
-# dist_away = vert_path(8,3,num_img)#prior to running mission, edit y_max/y_min to desired reference axis
-# get_points(vtcl_ht,horiz_dist,num_img,dist_away)
