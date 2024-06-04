@@ -127,7 +127,7 @@ def drone_up(vtcl_ht,horiz_dist,num_img,dist_away):
               
 
 vtcl_ht = 7
-horiz_dist = 7
+horiz_dist = 8
 num_img = 4
 dist_away = 6
             
