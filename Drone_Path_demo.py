@@ -12,18 +12,8 @@ from mpl_toolkits import mplot3d
 #move plot the points so it can create a path which will show the path of the drone
 
 
-##List of points##
-ht_dif = 2
-vtcl_ht = 6
-horiz_dist = 6
-horiz_dif = 2
 
-points = []
-x_point = []
-y_point = []
-z_point = []
 
-##Note, functions are to be used in any orientation, might have to adjust plus or minus in some lines
 
 
 
@@ -90,7 +80,7 @@ def drone_up(vtcl_ht,horiz_dist,num_img,dist_away):
     x_point_2 = []
     y_point_2 = []
     z_point_2 = []
-    x_dist = np.linspace(horiz_dist,1,num_img)
+    x_dist = np.linspace(horiz_dist,2,num_img)
     z_dist = np.linspace(0.5,vtcl_ht,3)
 
     
@@ -136,15 +126,19 @@ def drone_up(vtcl_ht,horiz_dist,num_img,dist_away):
     return x_point_2,y_point_2,z_point_2
               
 
-    
+vtcl_ht = 7
+horiz_dist = 7
+num_img = 4
+dist_away = 6
             
         
 x_data,y_data,z_data = drone_down(vtcl_ht,horiz_dist,num_img,dist_away)#we are calling our function with known values
 
-x_data,y_data,z_data = drone_down(7,7,4,6)#we are calling our function with known values
 
-horiz_dist = x_data[0]#this allows us to know where the drone left off after finish its path
 vtcl_ht = z_data[0]#this allows us to know where the drone left off after finish its path
+horiz_dist = x_data[0]#this allows us to know where the drone left off after finish its path
+num_img = 4
+dist_away = 6
 
 x_data_2,y_data_2,z_data_2 = drone_up(vtcl_ht,horiz_dist,4,6)#we are calling our function again, we do implement array slicing to obtain location of drone
 
