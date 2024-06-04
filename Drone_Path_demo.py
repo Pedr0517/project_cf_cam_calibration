@@ -134,13 +134,7 @@ dist_away = 6
         
 x_data,y_data,z_data = drone_down(vtcl_ht,horiz_dist,num_img,dist_away)#we are calling our function with known values
 
-
-vtcl_ht = z_data[0]#this allows us to know where the drone left off after finish its path
-horiz_dist = x_data[0]#this allows us to know where the drone left off after finish its path
-num_img = 4
-dist_away = 6
-
-x_data_2,y_data_2,z_data_2 = drone_up(vtcl_ht,horiz_dist,4,6)#we are calling our function again, we do implement array slicing to obtain location of drone
+x_data_2,y_data_2,z_data_2 = drone_up(vtcl_ht,horiz_dist,num_img,dist_away)#we are calling our function again, we do implement array slicing to obtain location of drone
 
 #we are putting data together to obtain plot/sim of drone path
 x_plot = x_data + x_data_2
