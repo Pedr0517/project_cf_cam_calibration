@@ -32,7 +32,7 @@ def get_points(x_dist: int, y_dist: int, z_dist: int, num_img: int) -> list:
 
 
 def path_plot(x_dist: int, y_dist: int, z_dist: int, num_img: int):
-    """"Simulate path the drone will take inside 3d plotting"""
+    """"Simulate path the drone will take using 3d plotting"""
 
     x_path = []
     y_path = []

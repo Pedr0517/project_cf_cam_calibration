@@ -28,7 +28,7 @@ def drone_run(drone_interface: DroneInterface, data: list):
 
     print("Start mission")
 
-    ##### ARM OFFBOARD #####
+    # ARM OFFBOARD #
     print("Arm")
     drone_interface.offboard()
     sleep(sleep_time)
@@ -36,13 +36,13 @@ def drone_run(drone_interface: DroneInterface, data: list):
     drone_interface.arm()
     sleep(sleep_time)
 
-    ##### TAKE OFF #####
+    # TAKE OFF #
     print("Take Off")
     drone_interface.takeoff(takeoff_height, speed=1.0)
     print("Take Off done")
     sleep(1)
 
-    ##### GO TO #####
+    # GO TO #
 
     for angle_rad in yaw:
         for goal in path:
@@ -53,7 +53,7 @@ def drone_run(drone_interface: DroneInterface, data: list):
             print("Go to done")
         sleep(sleep_time)
 
-    ##### LAND #####
+    # LAND #
     print("Landing")
     drone_interface.land(speed=0.5)
     print("Land done")
