@@ -18,19 +18,19 @@ def x_path(x_max: int, x_min: int, num_img: int) -> list:
     return np.linspace(x_max, x_min, num_img)
 
 
-def y_path(y_max: int, y_min: int, num_img: int):
+def y_path(y_max: int, y_min: int, num_img: int) -> list:
     """"Create list of y points containing those boundaries"""
 
     return np.linspace(y_max, y_min, num_img)
 
 
-def z_path(z_max: int, z_min: int):
+def z_path(z_max: int, z_min: int) -> list:
     """"Create list of z points containing those boundaries"""
 
     return np.linspace(z_max, z_min, 3)
 
 
-def position_mov(x_dist, y_dist):
+def position_mov(x_dist, y_dist) -> list:
     """"Asks user to move drone farther in x/y direction"""
     position = input("Move farther x or y direction (x/y): ")
 
@@ -103,7 +103,7 @@ def drone_down(x_dist: int, y_dist: int, z_dist: int, num_img: int) -> list:
     return x_point, y_point, z_point
 
 
-def drone_up(x_dist: int, y_dist: int, z_dist: int, num_img: int):
+def drone_up(x_dist: int, y_dist: int, z_dist: int, num_img: int) -> list:
     """"Postions drone at bottom of path, moves it up through x,y,z points"""
     # x_dist, bounds along x axis
     # y_dist, bounds along y axis
