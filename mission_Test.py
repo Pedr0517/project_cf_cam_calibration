@@ -65,6 +65,7 @@ if __name__ == '__main__':
     rclpy.init()
     """For any bounds, use cm"""
 
+    # Arguments#
     parser = argparse.ArgumentParser(description='Obtain bounds for drone')
 
     parser.add_argument('x_max', type=int, help='Max x bound')
@@ -87,6 +88,7 @@ if __name__ == '__main__':
 
     num_img = args.num_img
 
+    # Plot#
     path_plot(x_dist, y_dist, z_dist, num_img)
 
     data = get_points(x_dist, y_dist, z_dist, num_img)

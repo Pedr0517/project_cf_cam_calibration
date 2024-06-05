@@ -14,16 +14,19 @@ show the path of the drone
 
 def x_path(x_max: int, x_min: int, num_img: int):
     """"Create list of x points containing those boundaries"""
+
     return np.linspace(x_max, x_min, num_img)
 
 
 def y_path(y_max: int, y_min: int, num_img: int):
     """"Create list of y points containing those boundaries"""
+
     return np.linspace(y_max, y_min, num_img)
 
 
 def z_path(z_max: int, z_min: int):
     """"Create list of z points containing those boundaries"""
+
     return np.linspace(z_max, z_min, 3)
 
 
