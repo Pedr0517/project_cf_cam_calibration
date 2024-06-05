@@ -82,9 +82,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # XYZ Bounds#
-    x_dist = x_path(args.x_max, args.x_min, args.num_img)
-    y_dist = y_path(args.y_max, args.y_min, args.num_img)
-    z_dist = z_path(args.z_max, args.z_min, 3)
+    x_dist = np.linspace(args.x_max, args.x_min, args.num_img)
+    y_dist = np.linspace(args.y_max, args.y_min, args.num_img)
+    z_dist = np.linspace(args.z_max, args.z_min, 3)
 
     num_img = args.num_img
 
