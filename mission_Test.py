@@ -10,7 +10,6 @@ import numpy as np
 import rclpy
 from as2_python_api.drone_interface import DroneInterface
 from drone_functions import get_points, path_plot
-from drone_path import x_path, y_path, z_path
 
 
 def drone_run(drone_interface: DroneInterface, path_data: list):
