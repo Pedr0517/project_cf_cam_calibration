@@ -7,23 +7,23 @@ import numpy as np
 """create board to stay in the middle
 have points in all three x,y and z
 this will allow us to create a path along those points
-move plot the points so it can create a path which will show the path of the drone
+move plot the points so it can create a path which will 
+show the path of the drone
 """
 
 
 def x_path(x_max: int, x_min: int, num_img: int):
-    """"Input x-axis boundaries, fucntion will then create list of x points containing those boundaries"""
+    """"Create list of x points containing those boundaries"""
     return np.linspace(x_max, x_min, num_img)
 
 
 def y_path(y_max: int, y_min: int, num_img: int):
-    """"Input y-axis boundaries, fucntion will then create list of y points containing those boundaries"""
+    """"Create list of y points containing those boundaries"""
     return np.linspace(y_max, y_min, num_img)
 
 
 def z_path(z_max: int, z_min: int):
-    """"Input z-axis boundaries, fucntion will then create list of z points containing those boundaries"""
-
+    """"Create list of z points containing those boundaries"""
     return np.linspace(z_max, z_min, 3)
 
 
