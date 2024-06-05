@@ -65,9 +65,9 @@ def path_plot(x_dist: int, y_dist: int, z_dist: int, num_img: int):
     ax.scatter(board_x, board_y, board_z, color="red")
 
     # Set Labels#
-    ax.set_xlabel('x (cm)')
-    ax.set_ylabel('y (cm)')
-    ax.set_zlabel('z (cm)')
+    ax.set_xlabel('x (m)')
+    ax.set_ylabel('y (m)')
+    ax.set_zlabel('z (m)')
     ax.set_title('3D Drone Path')
 
     return plt.show()
