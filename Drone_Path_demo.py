@@ -12,7 +12,7 @@ show the path of the drone
 """
 
 
-def x_path(x_max: int, x_min: int, num_img: int):
+def x_path(x_max: int, x_min: int, num_img: int) -> list:
     """"Create list of x points containing those boundaries"""
 
     return np.linspace(x_max, x_min, num_img)
@@ -43,7 +43,7 @@ def position_mov(x_dist, y_dist):
     return x_dist, y_dist
 
 
-def drone_down(x_dist: int, y_dist: int, z_dist: int, num_img: int):
+def drone_down(x_dist: int, y_dist: int, z_dist: int, num_img: int) -> list:
     """"Postions drone at top of path, moves it down through x,y,z points"""
 
     # x_dist, bounds along x axis
