@@ -117,7 +117,7 @@ def drone_up(x_dist: int, y_dist: int, z_dist: int, num_img: int):
     z_point_2 = []
 
     x_axis, y_axis = position_mov(x_dist, y_dist)
-    z_axis = z_dist
+    z_axis = z_dist[::-1]
 
     for i in range(3):
         if i == 0:
