@@ -34,11 +34,7 @@ def drone_run(drone_interface: DroneInterface):
     #path_plot(vtcl_ht,horiz_dist,num_img,dist_away)
 
     data=get_points(vtcl_ht,horiz_dist,num_img,dist_away)
-<<<<<<< HEAD
     yaw = [(np.pi)/2,(np.pi*3)/4,np.pi/4]
-=======
-    angle_rad = (np.pi)/2
->>>>>>> 1ba637330d5cdc35bbc75f3cac85510972037868
 
     sleep_time = 2.0
 
@@ -62,7 +58,6 @@ def drone_run(drone_interface: DroneInterface):
     sleep(1)
 
     ##### GO TO #####
-<<<<<<< HEAD
 
 
     for angle_rad in yaw:#this will make the drone take pictures at three different angles, with their respective path
@@ -73,15 +68,7 @@ def drone_run(drone_interface: DroneInterface):
             sleep(sleep_time)
             print("Go to done")
         sleep(sleep_time)
-=======
-    for goal in path:
-        print(f"Go to path {goal}")
-        drone_interface.go_to.go_to_point_with_yaw(goal, speed=speed,angle = angle_rad)
-        print("Take photo")
-        sleep(sleep_time)
-        print("Go to done")
-    sleep(sleep_time)
->>>>>>> 1ba637330d5cdc35bbc75f3cac85510972037868
+    
 
     ##### LAND #####
     print("Landing")
