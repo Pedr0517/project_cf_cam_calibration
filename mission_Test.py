@@ -63,6 +63,7 @@ def drone_run(drone_interface: DroneInterface, data: list):
 
 if __name__ == '__main__':
     rclpy.init()
+    """For any bounds, use cm"""
 
     parser = argparse.ArgumentParser(description='Obtain bounds for drone')
 
