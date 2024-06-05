@@ -5,26 +5,25 @@ mission.py
 """
 
 from time import sleep
+import argparse
+import numpy as np
 import rclpy
 from as2_python_api.drone_interface import DroneInterface
 from drone_functions import get_points, path_plot
-from Drone_Path_demo import x_path, y_path, z_path
-import numpy as np
-import argparse
+from drone_path import x_path, y_path, z_path
 
 
-def drone_run(drone_interface: DroneInterface, data: list):
+def drone_run(drone_interface: DroneInterface, path_data: list):
     """ Run the mission """
 
     speed = 1.0
     takeoff_height = 1.0
 
-    data = data
     yaw = [(np.pi) / 2, (np.pi * 3) / 4, np.pi / 4]
 
     sleep_time = 2.0
 
-    path = data
+    path = path_data
 
     print("Start mission")
 
@@ -63,9 +62,10 @@ def drone_run(drone_interface: DroneInterface, data: list):
 
 if __name__ == '__main__':
     rclpy.init()
-    """For any bounds, use m"""
 
     # Arguments#
+    # For any bounds, use m
+
     parser = argparse.ArgumentParser(description='Obtain bounds for drone')
 
     parser.add_argument('x_max', type=int, help='Max x bound')

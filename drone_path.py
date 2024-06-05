@@ -1,15 +1,6 @@
+"""Pedro Ramos"""
 
 import numpy as np
-
-
-# approach#
-
-"""create board to stay in the middle
-have points in all three x,y and z
-this will allow us to create a path along those points
-move plot the points so it can create a path which will
-show the path of the drone
-"""
 
 
 def x_path(x_max: int, x_min: int, num_img: int) -> list:
@@ -24,10 +15,10 @@ def y_path(y_max: int, y_min: int, num_img: int) -> list:
     return np.linspace(y_max, y_min, num_img)
 
 
-def z_path(z_max: int, z_min: int) -> list:
+def z_path(z_max: int, z_min: int, segments: int) -> list:
     """"Create list of z points containing those boundaries"""
 
-    return np.linspace(z_max, z_min, 3)
+    return np.linspace(z_max, z_min, segments)
 
 
 def position_mov(x_dist, y_dist) -> list:

@@ -1,6 +1,6 @@
-
-from Drone_Path_demo import drone_down, drone_up
+# Drone Functions#
 import matplotlib.pyplot as plt
+from drone_path import drone_down, drone_up
 
 
 def get_points(x_dist: int, y_dist: int, z_dist: int, num_img: int) -> list:
