@@ -7,7 +7,7 @@ import numpy as np
 """create board to stay in the middle
 have points in all three x,y and z
 this will allow us to create a path along those points
-move plot the points so it can create a path which will 
+move plot the points so it can create a path which will
 show the path of the drone
 """
 

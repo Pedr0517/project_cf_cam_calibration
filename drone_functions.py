@@ -54,11 +54,17 @@ def path_plot(x_dist: int, y_dist: int, z_dist: int, num_img: int):
     ax.plot3D(x_path, y_path, z_path, color="green")
     ax.scatter(x_path, y_path, z_path, color="black")
 
-    # board_x = [max(x_dist), 0, 0, max(x_dist), max(x_dist)]
-    # board_y = np.linspace(max(y_dist), min(y_dist), 5)
-    # board_z = [max(z_dist), max(z_dist), 0, 0, max(z_dist)]
+    board_x = [x_dist[0], x_dist[-1], x_dist[-1], x_dist[0], x_dist[0]]
+    board_y = [y_dist[0], y_dist[-1], y_dist[-1], y_dist[0], y_dist[0]]
+    board_z = [z_dist[0], z_dist[0], z_dist[-1], z_dist[-1], z_dist[0]]
 
-    # ax.plot3D(board_x, board_y, board_z, color="blue")
-    # ax.scatter(board_x, board_y, board_z, color="red")
+    ax.plot3D(board_x, board_y, board_z, color="blue")
+    ax.scatter(board_x, board_y, board_z, color="red")
+
+    # Set Labels#
+    ax.set_xlabel('x (cm)')
+    ax.set_ylabel('y (cm)')
+    ax.set_zlabel('z (cm)')
+    ax.set_title('3D Drone Path')
 
     return plt.show()
