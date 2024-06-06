@@ -87,8 +87,8 @@ if __name__ == '__main__':
     parser.add_argument('--y_max', type=int, default=1, help='Max y bound')
     parser.add_argument('--y_min', type=int, default=1, help='Min y bound')
 
-    parser.add_argument('--z_max', type=int, default=1, help='Max z bound')
-    parser.add_argument('--z_min', type=int, default=0, help='Min z bound')
+    parser.add_argument('--z_max', type=int, default=3, help='Max z bound')
+    parser.add_argument('--z_min', type=int, default=1, help='Min z bound')
     parser.add_argument('--num_seg', type=int, default=3, help='Number of segments')
 
     parser.add_argument('--num_img', type=int, default=3, help='Number of images')
