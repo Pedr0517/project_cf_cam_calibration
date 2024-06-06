@@ -64,7 +64,7 @@ def drone_path(drone_inspector: DroneInspector, path_data: list):
     print("Go to origin")
     drone_inspector.go_to.go_to_path_facing(0.0, 0.0, 1.0, speed=speed)
     print("Landing")
-    DroneInspector.land(speed=0.5)
+    drone_inspector.land(speed=0.5)
     print("Land done")
 
     drone_inspector.disarm()
