@@ -8,15 +8,30 @@ from time import sleep
 import argparse
 import numpy as np
 import rclpy
+from geometry_msgs.msg import PoseStamped
 from as2_python_api.drone_interface import DroneInterface
 from drone_functions import get_points, path_plot
 
 
-def drone_takeoff(drone_interface: DroneInterface):
+class DroneInspector(DroneInterface):
+    def __init__(self, drone_id: str = "drone0", verbose: bool = False, use_sim_time: bool = False):
+        super().__init__(drone_id=drone_id, verbose=verbose, use_sim_time=use_sim_time)
+
+        self.box_position = None
+        self.create_subscription(PoseStamped, '/box_0/box_0/pose', self.box_pose_callback, 10)
+
+    def box_pose_callback(self, msg: PoseStamped):
+        self.box_position = msg.pose.position
+        # print(f"Box position: {self.box_position}")  # Debugging
+
+
+def drone_path(drone_inspector: DroneInspector, path_data: list):
     """ Run the mission """
 
     speed = 1.0
     takeoff_height = 1.0
+    path = path_data
+    angle_rad = np.pi / 2
 
     sleep_time = 2.0
 
@@ -24,93 +39,75 @@ def drone_takeoff(drone_interface: DroneInterface):
 
     # ARM OFFBOARD #
     print("Arm")
-    drone_interface.offboard()
+    drone_inspector.offboard()
     sleep(sleep_time)
     print("Offboard")
-    drone_interface.arm()
+    drone_inspector.arm()
     sleep(sleep_time)
 
     # TAKE OFF #
     print("Take Off")
-    drone_interface.takeoff(takeoff_height, speed=speed)
+    drone_inspector.takeoff(takeoff_height, speed=speed)
     print("Take Off done")
     sleep(1)
 
-    # GO TO #
-
-
-def drone_path(drone_interface: DroneInterface, path_data: list):
-
-    sleep_time = 2.0
-    speed = 1.0
-    angle_rad = np.pi / 2
-    path = path_data
-
+    # PATH #
     for goal in path:
         print(f"Go to path {goal}")
-        drone_interface.go_to.go_to_point_with_yaw(goal, speed=speed, angle=angle_rad)
+        drone_inspector.go_to.go_to_point_with_yaw(goal, speed=speed, angle=angle_rad)
         print("Take photo")
         sleep(sleep_time)
         print("Go to done")
     sleep(sleep_time)
 
-
-def drone_land(drone_interface: DroneInterface):
-
     # LAND #
+    print("Go to origin")
+    drone_inspector.go_to.go_to_path_facing(0.0, 0.0, 1.0, speed=speed)
     print("Landing")
-    drone_interface.land(speed=0.5)
+    DroneInspector.land(speed=0.5)
     print("Land done")
 
-    drone_interface.disarm()
+    drone_inspector.disarm()
 
 
 if __name__ == '__main__':
     rclpy.init()
 
-    uav = DroneInterface("drone0", verbose=False, use_sim_time=True)
-
-    drone_takeoff(uav)
+    uav = DroneInspector("drone0", verbose=False, use_sim_time=True)
 
     # Arguments#
     # For any bounds, use m
-    while True:
-        # allows for user to have multiple paths
+    # allows for user to have multiple paths
 
-        parser = argparse.ArgumentParser(description='Obtain bounds for drone')
+    parser = argparse.ArgumentParser(description='Obtain bounds for drone')
 
-        parser.add_argument('x_max', type=int, help='Max x bound')
-        parser.add_argument('x_min', type=int, help='Min x bound')
+    parser.add_argument('--x_max', type=int, default=2, help='Max x bound')
+    parser.add_argument('--x_min', type=int, default=-2, help='Min x bound')
 
-        parser.add_argument('y_max', type=int, help='Max y bound')
-        parser.add_argument('y_min', type=int, help='Min y bound')
+    parser.add_argument('--y_max', type=int, default=1, help='Max y bound')
+    parser.add_argument('--y_min', type=int, default=1, help='Min y bound')
 
-        parser.add_argument('z_max', type=int, help='Max z bound')
-        parser.add_argument('z_min', type=int, help='Min z bound')
+    parser.add_argument('--z_max', type=int, default=1, help='Max z bound')
+    parser.add_argument('--z_min', type=int, default=0, help='Min z bound')
+    parser.add_argument('--num_seg', type=int, default=3, help='Number of segments')
 
-        parser.add_argument('num_img', type=int, help='Number of images')
+    parser.add_argument('--num_img', type=int, default=3, help='Number of images')
 
-        args = parser.parse_args()
+    args = parser.parse_args()
 
-        # XYZ Bounds#
-        x_dist = np.linspace(args.x_max, args.x_min, args.num_img)
-        y_dist = np.linspace(args.y_max, args.y_min, args.num_img)
-        z_dist = np.linspace(args.z_max, args.z_min, 3)
+    # XYZ Bounds#
+    x_dist = np.linspace(args.x_max, args.x_min, args.num_img)
+    y_dist = np.linspace(args.y_max, args.y_min, args.num_img)
+    z_dist = np.linspace(args.z_max, args.z_min, args.num_seg)
 
-        num_img = args.num_img
+    num_img = args.num_img
 
-        # If user input zero images, loop breaks
-        if num_img == 0:
-            break
+    # Plot#
+    path_plot(x_dist, y_dist, z_dist, num_img)
 
-        # Plot#
-        path_plot(x_dist, y_dist, z_dist, num_img)
+    data = get_points(x_dist, y_dist, z_dist, num_img)
 
-        data = get_points(x_dist, y_dist, z_dist, num_img)
-
-        drone_path(uav, data)
-
-    drone_land(uav)
+    drone_path(uav, data)
 
     uav.shutdown()
     rclpy.shutdown()

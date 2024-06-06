@@ -18,29 +18,24 @@ def drone_points(x_dist: list, y_dist: list, z_dist: list, num_img: int) -> list
     y_point = []
     z_point = []
 
-    for i in range(3):
-        if i == 0 or i == 2:
+    for i in range(len(z_dist)):
+        if i % 2 == 0:
 
             for j in range(num_img):
-                x = x_dist[j]
-                x_point.append(x)
 
-                z = z_dist[i]
-                z_point.append(z)
+                x_point.append(x_dist[j])
 
-                y = y_dist[j]
-                y_point.append(y)
+                z_point.append(z_dist[i])
 
-        if i == 1:
+                y_point.append(y_dist[j])
+
+        if i % 2 != 0:
             for j in range(1, num_img + 1):
 
-                x = x_dist[-j]
-                x_point.append(x)
+                x_point.append(x_dist[-j])
 
-                z = z_dist[i]
-                z_point.append(z)
+                z_point.append(z_dist[i])
 
-                y = y_dist[-j]
-                y_point.append(y)
+                y_point.append(y_dist[-j])
 
     return x_point, y_point, z_point

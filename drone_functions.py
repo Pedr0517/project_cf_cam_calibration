@@ -1,7 +1,7 @@
 # Drone Functions#
 import matplotlib.pyplot as plt
-from drone_path import drone_points
 import numpy as np
+from drone_path import drone_points
 
 
 def get_points(x_dist: list, y_dist: list, z_dist: list, num_img: int) -> list:
@@ -55,12 +55,12 @@ def path_plot(x_dist: list, y_dist: list, z_dist: list, num_img: int) -> plt:
     ax.scatter(x_path, y_path, z_path, color="black")
 
     # Charucco Board#
-    # board_x = [x_dist[0] + 1, x_dist[-1] - 1, x_dist[-1] - 1, x_dist[0] + 1, x_dist[0] + 1]
-    # board_y = [y_dist[0] + 1, y_dist[-1] - 1, y_dist[-1] - 1, y_dist[0] + 1, y_dist[0] + 1]
-    # board_z = [z_dist[0], z_dist[0], z_dist[-1], z_dist[-1], z_dist[0]]
+    board_x = [6, 0, 0, 6, 6]
+    board_y = [7, 7, 7, 7, 7]
+    board_z = [6, 6, 0, 0, 6]
 
-    # ax.plot3D(board_x, board_y, board_z, color="blue")
-    # ax.scatter(board_x, board_y, board_z, color="red")
+    ax.plot3D(board_x, board_y, board_z, color="blue")
+    ax.scatter(board_x, board_y, board_z, color="red")
 
     # Set Labels#
     ax.set_xlabel('x (m)')
@@ -69,3 +69,14 @@ def path_plot(x_dist: list, y_dist: list, z_dist: list, num_img: int) -> plt:
     ax.set_title('3D Drone Path')
 
     return plt.show()
+
+
+if __name__ == '__main__':
+    x_dist = np.linspace(2, -2, 3)
+    y_dist = np.linspace(1, 1, 3)
+    z_dist = np.linspace(1, -1, 3)
+    num_img = 3
+
+    plot_data = get_points(x_dist, y_dist, z_dist, num_img)
+    print(plot_data)
+    path_plot(x_dist, y_dist, z_dist, num_img)
