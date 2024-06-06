@@ -75,7 +75,7 @@ if __name__ == '__main__':
     rclpy.init()
 
     uav = DroneInspector("drone0", verbose=False, use_sim_time=True)
-
+    sleep(3)
     # Arguments#
     # For any bounds, use m
     # allows for user to have multiple paths
@@ -88,8 +88,8 @@ if __name__ == '__main__':
     parser.add_argument('--y_max', type=int, default=1, help='Max y bound')
     parser.add_argument('--y_min', type=int, default=1, help='Min y bound')
 
-    parser.add_argument('--z_max', type=int, default=3, help='Max z bound')
-    parser.add_argument('--z_min', type=int, default=1, help='Min z bound')
+    parser.add_argument('--z_center', type=int, default=3, help='Distance away from center')
+
     parser.add_argument('--num_seg', type=int, default=3, help='Number of segments')
 
     parser.add_argument('--num_img', type=int, default=3, help='Number of images')
@@ -97,9 +97,16 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # XYZ Bounds#
-    x_dist = np.linspace(args.x_max, args.x_min, args.num_img)
-    y_dist = np.linspace(args.y_max, args.y_min, args.num_img)
-    z_dist = np.linspace(args.z_max, args.z_min, args.num_seg)
+
+    center_charruco = [uav.box_position.x, uav.box_position.y, uav.box_position.z]
+    print(center_charruco)
+
+    x_dist = np.linspace(center_charruco[0] + args.x_max,
+                         center_charruco[0] - args.x_min, args.num_img)
+    y_dist = np.linspace(center_charruco[1] + args.y_max,
+                         center_charruco[1] - args.y_min, args.num_img)
+    z_dist = np.linspace(center_charruco[2] + args.z_center,
+                         center_charruco[2] - args.z_center, args.num_seg)
 
     num_img = args.num_img
 
