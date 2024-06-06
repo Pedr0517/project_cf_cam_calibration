@@ -8,8 +8,21 @@ from time import sleep
 import argparse
 import numpy as np
 import rclpy
+from geometry_msgs.msg import PoseStamped
 from as2_python_api.drone_interface import DroneInterface
 from drone_functions import get_points, path_plot
+
+
+class DroneInspector(DroneInterface):
+    def __init__(self, drone_id: str = "drone0", verbose: bool = False, use_sim_time: bool = False):
+        super().__init__(drone_id=drone_id, verbose=verbose, use_sim_time=use_sim_time)
+
+        self.box_position = None
+        self.create_subscription(PoseStamped, '/box_0/box_0/pose', self.box_pose_callback, 10)
+
+    def box_pose_callback(self, msg: PoseStamped):
+        self.box_position = msg.pose.position
+        print(f"Box position: {self.box_position}")  # Debugging
 
 
 def drone_takeoff(drone_interface: DroneInterface):
