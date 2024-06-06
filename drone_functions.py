@@ -1,9 +1,10 @@
 # Drone Functions#
 import matplotlib.pyplot as plt
 from drone_path import drone_points
+import numpy as np
 
 
-def get_points(x_dist: int, y_dist: int, z_dist: int, num_img: int) -> list:
+def get_points(x_dist: list, y_dist: list, z_dist: list, num_img: int) -> list:
     """"Gathers points from imported functions, returns a list of list containing x,y,z path points"""
 
     # x_path, collection of all x points within drones path
@@ -27,7 +28,7 @@ def get_points(x_dist: int, y_dist: int, z_dist: int, num_img: int) -> list:
     return points
 
 
-def path_plot(x_dist: int, y_dist: int, z_dist: int, num_img: int) -> plt:
+def path_plot(x_dist: list, y_dist: list, z_dist: list, num_img: int) -> plt:
     """"Simulate path the drone will take using 3d plotting"""
 
     # x_path, collection of all x points within drones path
@@ -47,17 +48,19 @@ def path_plot(x_dist: int, y_dist: int, z_dist: int, num_img: int) -> plt:
         x_path.append(data[i][0])
         y_path.append(data[i][1])
         z_path.append(data[i][2])
+    print(x_path)
+    print(y_path)
 
     ax.plot3D(x_path, y_path, z_path, color="green")
     ax.scatter(x_path, y_path, z_path, color="black")
 
     # Charucco Board#
-    board_x = [x_dist[0], x_dist[-1], x_dist[-1], x_dist[0], x_dist[0]]
-    board_y = [y_dist[0], y_dist[-1], y_dist[-1], y_dist[0], y_dist[0]]
-    board_z = [z_dist[0], z_dist[0], z_dist[-1], z_dist[-1], z_dist[0]]
+    # board_x = [x_dist[0] + 1, x_dist[-1] - 1, x_dist[-1] - 1, x_dist[0] + 1, x_dist[0] + 1]
+    # board_y = [y_dist[0] + 1, y_dist[-1] - 1, y_dist[-1] - 1, y_dist[0] + 1, y_dist[0] + 1]
+    # board_z = [z_dist[0], z_dist[0], z_dist[-1], z_dist[-1], z_dist[0]]
 
-    ax.plot3D(board_x, board_y, board_z, color="blue")
-    ax.scatter(board_x, board_y, board_z, color="red")
+    # ax.plot3D(board_x, board_y, board_z, color="blue")
+    # ax.scatter(board_x, board_y, board_z, color="red")
 
     # Set Labels#
     ax.set_xlabel('x (m)')

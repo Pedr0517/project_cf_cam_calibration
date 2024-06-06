@@ -1,20 +1,7 @@
 """Pedro Ramos"""
 
 
-def position_mov(x_dist, y_dist) -> list:
-    """"Asks user to move drone farther in x/y direction"""
-    position = input("Move farther x or y direction (x/y): ")
-
-    if position == "x":
-        x_dist = x_dist - 2
-
-    elif position == "y":
-        y_dist = y_dist - 2
-
-    return x_dist, y_dist
-
-
-def drone_points(x_dist: int, y_dist: int, z_dist: int, num_img: int) -> list:
+def drone_points(x_dist: list, y_dist: list, z_dist: list, num_img: int) -> list:
     """"Postions drone at top of path, moves it down through x,y,z points"""
 
     # x_dist, bounds along x axis
@@ -31,35 +18,29 @@ def drone_points(x_dist: int, y_dist: int, z_dist: int, num_img: int) -> list:
     y_point = []
     z_point = []
 
-    for h in range(1):
-        # h == 1 refers to it coming up
-        if h == 1:
-            x_dist.reverse()
-            y_dist.reverse()
-            z_dist.reverse()
-        for i in range(3):
-            if i == 0 or i == 2:
+    for i in range(3):
+        if i == 0 or i == 2:
 
-                for j in range(num_img):
-                    x = x_dist[j]
-                    x_point.append(x)
+            for j in range(num_img):
+                x = x_dist[j]
+                x_point.append(x)
 
-                    z = z_dist[i]
-                    z_point.append(z)
+                z = z_dist[i]
+                z_point.append(z)
 
-                    y = y_dist[j]
-                    y_point.append(y)
+                y = y_dist[j]
+                y_point.append(y)
 
-            if i == 1:
-                for j in range(1, num_img + 1):
+        if i == 1:
+            for j in range(1, num_img + 1):
 
-                    x = x_dist[-j]
-                    x_point.append(x)
+                x = x_dist[-j]
+                x_point.append(x)
 
-                    z = z_dist[i]
-                    z_point.append(z)
+                z = z_dist[i]
+                z_point.append(z)
 
-                    y = y_dist[-j]
-                    y_point.append(y)
+                y = y_dist[-j]
+                y_point.append(y)
 
     return x_point, y_point, z_point
