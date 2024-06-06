@@ -48,8 +48,6 @@ def path_plot(x_dist: list, y_dist: list, z_dist: list, num_img: int) -> plt:
         x_path.append(data[i][0])
         y_path.append(data[i][1])
         z_path.append(data[i][2])
-    print(x_path)
-    print(y_path)
 
     ax.plot3D(x_path, y_path, z_path, color="green")
     ax.scatter(x_path, y_path, z_path, color="black")
