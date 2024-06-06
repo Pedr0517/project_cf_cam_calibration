@@ -63,6 +63,7 @@ def drone_path(drone_inspector: DroneInspector, path_data: list):
     # LAND #
     print("Go to origin")
     drone_inspector.go_to.go_to_path_facing(0.0, 0.0, 1.0, speed=speed)
+    sleep(sleep_time)
     print("Landing")
     drone_inspector.land(speed=0.5)
     print("Land done")
