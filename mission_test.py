@@ -103,9 +103,10 @@ if __name__ == '__main__':
 
     num_img = args.num_img
 
-    # Plot#
+    # PLOT #
     path_plot(x_dist, y_dist, z_dist, num_img)
 
+    # DATA #
     data = get_points(x_dist, y_dist, z_dist, num_img)
 
     drone_path(uav, data)
