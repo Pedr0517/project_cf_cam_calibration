@@ -1,9 +1,7 @@
-import numpy as np
 
 
-x = np.linspace(1,7,3)
-
-print(x)
-
-x = x-2
-print(x)
+for i in range(3):
+    if i == 0 or i == 2:
+        print('hi')
+    if i == 1:
+        print('hello')
