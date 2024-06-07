@@ -1,7 +1,8 @@
 # Drone Functions#
 import matplotlib.pyplot as plt
-from drone_path import drone_points
 import numpy as np
+from drone_path import drone_points
+import argparse
 
 
 def get_points(x_dist: list, y_dist: list, z_dist: list, num_img: int) -> list:
@@ -48,19 +49,17 @@ def path_plot(x_dist: list, y_dist: list, z_dist: list, num_img: int) -> plt:
         x_path.append(data[i][0])
         y_path.append(data[i][1])
         z_path.append(data[i][2])
-    print(x_path)
-    print(y_path)
 
     ax.plot3D(x_path, y_path, z_path, color="green")
     ax.scatter(x_path, y_path, z_path, color="black")
 
     # Charucco Board#
-    # board_x = [x_dist[0] + 1, x_dist[-1] - 1, x_dist[-1] - 1, x_dist[0] + 1, x_dist[0] + 1]
-    # board_y = [y_dist[0] + 1, y_dist[-1] - 1, y_dist[-1] - 1, y_dist[0] + 1, y_dist[0] + 1]
-    # board_z = [z_dist[0], z_dist[0], z_dist[-1], z_dist[-1], z_dist[0]]
+    board_x = [3, 9, 9, 3, 3]  # [min,min,max,max,min]
+    board_y = [9, 9, 9, 9, 9]  # [min,min,max,max,min]
+    board_z = [7, 7, 0, 0, 7]
 
-    # ax.plot3D(board_x, board_y, board_z, color="blue")
-    # ax.scatter(board_x, board_y, board_z, color="red")
+    ax.plot3D(board_x, board_y, board_z, color="blue")
+    ax.scatter(board_x, board_y, board_z, color="red")
 
     # Set Labels#
     ax.set_xlabel('x (m)')
@@ -69,3 +68,43 @@ def path_plot(x_dist: list, y_dist: list, z_dist: list, num_img: int) -> plt:
     ax.set_title('3D Drone Path')
 
     return plt.show()
+
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser(description='Obtain bounds for drone')
+
+    parser.add_argument('--x_max', type=int, default=4, help='Max x bound')
+    parser.add_argument('--x_min', type=int, default=4, help='Min x bound')
+
+    parser.add_argument('--y_max', type=int, default=1, help='Max y bound')
+    parser.add_argument('--y_min', type=int, default=1, help='Min y bound')
+
+    parser.add_argument('--z_center', type=int, default=3, help='Distance away from center')
+
+    parser.add_argument('--num_seg', type=int, default=3, help='Number of segments')
+
+    parser.add_argument('--num_img', type=int, default=3, help='Number of images')
+
+    args = parser.parse_args()
+
+    center_board = [10, 9, 3.5]  # [x,y,z]
+
+    # XYZ Bounds#
+    x_dist = np.linspace(center_board[0] + args.x_max,
+                         center_board[0] - args.x_min, args.num_img)
+    y_dist = np.linspace(center_board[1] + args.y_max,
+                         center_board[1] - args.y_min, args.num_img)
+    z_dist = np.linspace(center_board[2] + args.z_center,
+                         center_board[2] - args.z_center, args.num_seg)
+
+    num_img = args.num_img
+
+    # plot_data = get_points(x_dist, y_dist, z_dist, num_img)
+    # print(plot_data)
+    path_plot(x_dist, y_dist, z_dist, num_img)
+
+    if input('Flip orienation (Y/n)? ') == 'Y':
+        x_dist = np.flip(x_dist)
+
+    path_plot(x_dist, y_dist, z_dist, num_img)
