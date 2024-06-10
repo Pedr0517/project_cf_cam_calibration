@@ -9,7 +9,7 @@ class DroneImage(Node):
     def __init__(self):
         super().__init__('drone_image')
         self.subscription = self.create_subscription(
-            Image, 'charruco_image', self.image_upload, 10)
+            Image, 'image_raw', self.image_upload, 10)
 
     def image_upload(self, msg):
         self.get_logger().info('Image received')
