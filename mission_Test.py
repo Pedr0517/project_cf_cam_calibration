@@ -25,13 +25,13 @@ class DroneInspector(DroneInterface):
         # print(f"Box position: {self.box_position}")  # Debugging
 
 
-def drone_path(drone_inspector: DroneInspector, path_data: list):
+def drone_path(drone_inspector: DroneInspector, path_data: list, angle: float):
     """ Run the mission """
-
+    # [0.0:0, np.pi/2:1.57, np.pi:3.14, (np.pi*3)/2:4.71]
     speed = 1.0
     takeoff_height = 1.0
     path = path_data
-    angle_rad = np.pi / 2
+    angle_rad = angle
 
     sleep_time = 2.0
 
@@ -52,13 +52,17 @@ def drone_path(drone_inspector: DroneInspector, path_data: list):
     sleep(1)
 
     # PATH #
-    for goal in path:
-        print(f"Go to path {goal}")
-        drone_inspector.go_to.go_to_point_with_yaw(goal, speed=speed, angle=angle_rad)
-        print("Take photo")
+    while True:
+
+        for goal in path:
+            print(f"Go to path {goal}")
+            drone_inspector.go_to.go_to_point_with_yaw(goal, speed=speed, angle=angle_rad)
+            print("Take photo")
+            sleep(sleep_time)
+            print("Go to done")
         sleep(sleep_time)
-        print("Go to done")
-    sleep(sleep_time)
+        if input('Repeat path (Y/n)? ') == 'n':
+            break
 
     # LAND #
     print("Go to origin")
@@ -94,6 +98,8 @@ if __name__ == '__main__':
 
     parser.add_argument('--num_img', type=int, default=3, help='Number of images')
 
+    parser.add_argument('--yaw_angle', type=float, default=0, help='Yaw drone will take path with')
+
     args = parser.parse_args()
 
     # XYZ Bounds#
@@ -116,7 +122,7 @@ if __name__ == '__main__':
     # DATA #
     data = get_points(x_dist, y_dist, z_dist, num_img)
 
-    drone_path(uav, data)
+    drone_path(uav, data, args.yaw_angle)
 
     uav.shutdown()
     rclpy.shutdown()
