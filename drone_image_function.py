@@ -1,6 +1,7 @@
 import os
 import rclpy
 from rclpy.node import Node
+import os
 
 from sensor_msgs.msg import Image
 
@@ -14,10 +15,13 @@ class DroneImage(Node):
     def image_upload(self):
         msg = Image()
         msg.data = 'image here'
+
         self.folder_dir = "/project_cf_cam_calibration/drone_images"
         self.image_name = (f'image{self.i}.png')
+
         with open(os.path.join(self.folder_dir, self.image_name), 'wb') as f:
             f.write(msg.data)
+
         self.publisher.publish(msg)
         self.get_logger().info('Image uploaded')
         self.i += 1
