@@ -8,25 +8,22 @@ from sensor_msgs.msg import Image
 class DroneImage(Node):
     def __init__(self):
         super().__init__('drone_image')
-        self.publisher = self.create_publisher(Image, 'charruco_image', 10)
-        self.i = 0
+        self.subscription = self.create_subscription(
+            Image, 'charruco_image', self.image_upload, 10)
 
-    def image_upload(self):
-        # Obtaining image
-        msg = Image()
-        msg.data = 'image here'
+    def image_upload(self, msg):
+        self.get_logger().info('Image received')
+        # Location and name
+        folder_dir = "/project_cf_cam_calibration/drone_images"
 
         # Location and name
-        self.folder_dir = "/project_cf_cam_calibration/drone_images"
-        self.image_name = (f'image{self.i}.png')
+        image_name = 'image_taken.png'
 
         # Adding image to folder
-        with open(os.path.join(self.folder_dir, self.image_name), 'wb') as f:
+        with open(os.path.join(folder_dir, image_name), 'wb') as f:
             f.write(msg.data)
 
-        self.publisher.publish(msg)
         self.get_logger().info('Image uploaded')
-        self.i += 1
 
 
 def main(args=None):
