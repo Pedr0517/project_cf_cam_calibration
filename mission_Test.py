@@ -11,7 +11,6 @@ import numpy as np
 import rclpy
 from geometry_msgs.msg import PoseStamped
 from as2_python_api.drone_interface import DroneInterface
-
 import cv2
 from sensor_msgs.msg import Image
 from drone_functions import get_points, path_plot
@@ -60,7 +59,7 @@ class DroneInspector(DroneInterface):
 def drone_path(drone_inspector: DroneInspector, path_data: list, angle: float):
     """ Run the mission """
     # [0.0:0, np.pi/2:1.57, np.pi:3.14, (np.pi*3)/2:4.71]
-    speed = 1.0
+    speed = 0.5
     takeoff_height = 1.0
     path = path_data
     angle_rad = angle
@@ -91,15 +90,15 @@ def drone_path(drone_inspector: DroneInspector, path_data: list, angle: float):
             drone_inspector.go_to.go_to_point_with_yaw(goal, speed=speed, angle=angle_rad)
             sleep(sleep_time)
             drone_inspector.save_image()
-
             print("Go to done")
         sleep(sleep_time)
+
         if input('Repeat path (Y/n)? ') == 'n':
             break
 
     # LAND #
     print("Go to origin")
-    drone_inspector.go_to.go_to_path_facing(0.0, 0.0, 1.0, speed=speed)
+    drone_inspector.go_to.go_to_path_facing(0.0, 0.0, 1.0, speed=speed)  # ask about this
     sleep(sleep_time)
     print("Landing")
     drone_inspector.land(speed=0.5)
