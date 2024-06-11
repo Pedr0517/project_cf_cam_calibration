@@ -1,6 +1,8 @@
 import os
 import rclpy
 from rclpy.node import Node
+import numpy as np
+import cv2
 
 from sensor_msgs.msg import Image
 
@@ -12,22 +14,22 @@ class DroneImage(Node):
             Image, 'drone0/sensor_measurements/cam/image_raw', self.image_upload, 10)
         self.i = 0
 
-        # self.folder_dir = "/project_cf_cam_calibration/drone_images"
-
-        # os.makedirs(self.folder_dir, exist_ok=True)
-
     def image_upload(self, msg):
         self.get_logger().info('Image received')
         # Location and name
-        # you direct it to drone_images becasue it is already launching from project_cf_cam_calibration
         folder_dir = "drone_images"
+
+        # Conerting ROS images to compatible file
+        image_np = np.frombuffer(msg.data, dtype=np.uint8)
+
+        image_np = image_np.reshape((msg.height, msg.width, -1))
 
         # Location and name
         image_name = f'image_taken{self.i}.png'
+        image_path = os.path.join(folder_dir, image_name)
 
         # Adding image to folder
-        with open(os.path.join(folder_dir, image_name), 'wb') as f:
-            f.write(msg.data)
+        cv2.imwrite(image_path, image_np)
 
         self.get_logger().info('Image uploaded')
         self.i += 1
