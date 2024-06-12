@@ -54,7 +54,7 @@ def path_plot(x_dist: list, y_dist: list, z_dist: list, num_img: int) -> plt:
     ax.scatter(x_path, y_path, z_path, color="black")
 
     # Charucco Board#
-    board_x = [0, 1.2, 1.2, 0, 0]  # [min,min,max,max,min]
+    board_x = [5.4, 6.6, 6.6, 5.4, 5.4]  # [min,min,max,max,min]
     board_y = [9, 9, 9, 9, 9]  # [min,min,max,max,min]
     board_z = [1.2, 1.2, 0, 0, 1.2]
 
