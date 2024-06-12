@@ -37,10 +37,12 @@ class DroneInspector(DroneInterface):
         self.image_received = msg
 
     def save_image(self):
+        self.get_logger().info('Image received')
+
         # Location and name
         folder_dir = "drone_images"
 
-        # Conerting ROS images to compatible file
+        # Converting ROS images to compatible file
         image_np = np.frombuffer(self.image_received.data, dtype=np.uint8)
 
         image_np = image_np.reshape((self.image_received.height, self.image_received.width, -1))
@@ -137,7 +139,6 @@ if __name__ == '__main__':
     # XYZ Bounds#
 
     center_charruco = [uav.box_position.x, uav.box_position.y, uav.box_position.z]
-    print(center_charruco)
 
     x_dist = np.linspace(center_charruco[0] + args.x_max,
                          center_charruco[0] - args.x_min, args.num_img)
