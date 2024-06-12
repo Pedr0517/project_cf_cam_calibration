@@ -10,6 +10,7 @@ import os
 import numpy as np
 import rclpy
 from mocap4r2_msgs.msg import RigidBodies, RigidBody
+from geometry_msgs.msg import PoseStamped
 from geometry_msgs.msg import Pose
 from as2_python_api.drone_interface import DroneInterface
 import cv2
@@ -22,13 +23,24 @@ class DroneInspector(DroneInterface):
         super().__init__(drone_id=drone_id, verbose=verbose, use_sim_time=use_sim_time)
 
         self.charuco_pose: Pose = None
+        self.box_position = None
+
         self.create_subscription(RigidBodies, '/mocap4r2/rigid_bodies',
                                  self.callback, 10)  # double check topic name
+
+        self.create_subscription(PoseStamped, '/box_0/box_0/pose', self.box_pose_callback, 10)
+
         self.create_subscription(
             Image, 'sensor_measurements/cam/image_raw', self.image_upload, 10)
         print("drone_inspector intitialized")
 
         self.i = 0
+
+    def box_pose_callback(self, msg: PoseStamped):
+
+        self.charuco_pose = msg.pose.position
+
+        # print(f"Box position: {self.box_position}")  # Debugging
 
     def callback(self, msg: RigidBodies):
         rbody: RigidBody
@@ -51,7 +63,8 @@ class DroneInspector(DroneInterface):
         # Converting ROS images to compatible file
         image_np = np.frombuffer(self.image_received.data, dtype=np.uint8)
 
-        image_np = image_np.reshape((self.image_received.height, self.image_received.width, -1))
+        image_np = image_np.reshape((self.image_received.height,
+                                     self.image_received.width, -1))
 
         # Location and name
         image_name = f'image_taken{self.i}.png'
@@ -103,9 +116,11 @@ def drone_path(drone_inspector: DroneInspector, path_data: list, angle: float):
         sleep(sleep_time)
 
         if input('Repeat path (Y/n)? ') == 'n':
+            drone_inspector.go_to.go_to_path_facing(path[-1][0], path[-1][1], 1.0, speed=speed)
             break
 
     # LAND #
+
     print("Go to origin")
     drone_inspector.go_to.go_to_path_facing(0.0, 0.0, 1.0, speed=speed)  # ask about this
     sleep(sleep_time)
@@ -147,9 +162,9 @@ if __name__ == '__main__':
     # size of charruco in real life is 120x120 cm
     # when you tell drone to move one, that is equivilant to 100 cm
 
-    center_charruco = [uav.charuco_pose.position.x,
-                       uav.charuco_pose.position.y, uav.charuco_pose.position.z]
-    center_charruco = [6, 9, 0.6]  # simulation purposes
+    center_charruco = [uav.charuco_pose.x,
+                       uav.charuco_pose.y, uav.charuco_pose.z]
+    print(center_charruco)
 
     x_dist = np.linspace(center_charruco[0] + args.x_max,
                          center_charruco[0] - args.x_min, args.num_img)
