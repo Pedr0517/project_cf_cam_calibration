@@ -54,9 +54,9 @@ def path_plot(x_dist: list, y_dist: list, z_dist: list, num_img: int) -> plt:
     ax.scatter(x_path, y_path, z_path, color="black")
 
     # Charucco Board#
-    board_x = [3, 9, 9, 3, 3]  # [min,min,max,max,min]
+    board_x = [0, 1.2, 1.2, 0, 0]  # [min,min,max,max,min]
     board_y = [9, 9, 9, 9, 9]  # [min,min,max,max,min]
-    board_z = [7, 7, 0, 0, 7]
+    board_z = [1.2, 1.2, 0, 0, 1.2]
 
     ax.plot3D(board_x, board_y, board_z, color="blue")
     ax.scatter(board_x, board_y, board_z, color="red")
@@ -74,21 +74,21 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Obtain bounds for drone')
 
-    parser.add_argument('--x_max', type=int, default=4, help='Max x bound')
-    parser.add_argument('--x_min', type=int, default=4, help='Min x bound')
+    parser.add_argument('--x_max', type=float, default=0.75, help='Max x bound')
+    parser.add_argument('--x_min', type=float, default=0.75, help='Min x bound')
 
-    parser.add_argument('--y_max', type=int, default=1, help='Max y bound')
-    parser.add_argument('--y_min', type=int, default=1, help='Min y bound')
+    parser.add_argument('--y_max', type=float, default=-0.25, help='Max y bound')
+    parser.add_argument('--y_min', type=float, default=0.25, help='Min y bound')
 
-    parser.add_argument('--z_center', type=int, default=3, help='Distance away from center')
+    parser.add_argument('--z_center', type=float, default=0.5, help='Distance away from center')
 
-    parser.add_argument('--num_seg', type=int, default=3, help='Number of segments')
+    parser.add_argument('--num_seg', type=float, default=3, help='Number of segments')
 
-    parser.add_argument('--num_img', type=int, default=3, help='Number of images')
+    parser.add_argument('--num_img', type=float, default=3, help='Number of images')
 
     args = parser.parse_args()
 
-    center_board = [10, 9, 3.5]  # [x,y,z]
+    center_board = [0.6, 9, 0.6]  # [x,y,z]
 
     # XYZ Bounds#
     x_dist = np.linspace(center_board[0] + args.x_max,
@@ -102,9 +102,4 @@ if __name__ == '__main__':
 
     # plot_data = get_points(x_dist, y_dist, z_dist, num_img)
     # print(plot_data)
-    path_plot(x_dist, y_dist, z_dist, num_img)
-
-    if input('Flip orienation (Y/n)? ') == 'Y':
-        x_dist = np.flip(x_dist)
-
     path_plot(x_dist, y_dist, z_dist, num_img)

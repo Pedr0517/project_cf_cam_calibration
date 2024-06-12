@@ -9,7 +9,8 @@ import argparse
 import os
 import numpy as np
 import rclpy
-from geometry_msgs.msg import PoseStamped
+from mocap4r2_msgs.msg import RigidBodies, RigidBody
+from geometry_msgs.msg import Pose
 from as2_python_api.drone_interface import DroneInterface
 import cv2
 from sensor_msgs.msg import Image
@@ -20,19 +21,24 @@ class DroneInspector(DroneInterface):
     def __init__(self, drone_id: str = "drone0", verbose: bool = False, use_sim_time: bool = False):
         super().__init__(drone_id=drone_id, verbose=verbose, use_sim_time=use_sim_time)
 
-        self.box_position = None
-        self.create_subscription(PoseStamped, '/box_0/box_0/pose', self.box_pose_callback, 10)
+        self.charuco_pose: Pose = None
+        self.create_subscription(RigidBodies, '/mocap4r2/rigid_bodies',
+                                 self.callback, 10)  # double check topic name
         self.create_subscription(
             Image, 'sensor_measurements/cam/image_raw', self.image_upload, 10)
         print("drone_inspector intitialized")
 
         self.i = 0
 
-    def box_pose_callback(self, msg: PoseStamped):
-        self.box_position = msg.pose.position
-        # print(f"Box position: {self.box_position}")  # Debugging
+    def callback(self, msg: RigidBodies):
+        rbody: RigidBody
+        for rbody in msg.rigidbodies:
+            if rbody.rigid_body_name == "charuco_board":  # double check name
+                print(f"{rbody.pose=}")  # Debug
+                self.charuco_pose = rbody.pose
+                break
 
-    def image_upload(self, msg):
+    def image_upload(self, msg: Image):
 
         self.image_received = msg
 
@@ -120,25 +126,28 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Obtain bounds for drone')
 
-    parser.add_argument('--x_max', type=int, default=3, help='Max x bound')
-    parser.add_argument('--x_min', type=int, default=3, help='Min x bound')
+    parser.add_argument('--x_max', type=float, default=0.75, help='Max x bound')
+    parser.add_argument('--x_min', type=float, default=0.75, help='Min x bound')
 
-    parser.add_argument('--y_max', type=int, default=1, help='Max y bound')
-    parser.add_argument('--y_min', type=int, default=1, help='Min y bound')
+    parser.add_argument('--y_max', type=float, default=0.75, help='Max y bound')
+    parser.add_argument('--y_min', type=float, default=0.75, help='Min y bound')
 
-    parser.add_argument('--z_center', type=int, default=3, help='Distance away from center')
+    parser.add_argument('--z_center', type=float, default=0.5, help='Distance away from center')
 
-    parser.add_argument('--num_seg', type=int, default=3, help='Number of segments')
+    parser.add_argument('--num_seg', type=float, default=3, help='Number of segments')
 
-    parser.add_argument('--num_img', type=int, default=3, help='Number of images')
+    parser.add_argument('--num_img', type=float, default=3, help='Number of images')
 
     parser.add_argument('--yaw_angle', type=float, default=0, help='Yaw drone will take path with')
 
     args = parser.parse_args()
 
     # XYZ Bounds#
+    # size of charruco in real life is 120x120 cm
+    # when you tell drone to move one, that is equivilant to 100 cm
 
-    center_charruco = [uav.box_position.x, uav.box_position.y, uav.box_position.z]
+    center_charruco = [uav.charuco_pose.position.x,
+                       uav.charuco_pose.position.y, uav.charuco_pose.position.z]
 
     x_dist = np.linspace(center_charruco[0] + args.x_max,
                          center_charruco[0] - args.x_min, args.num_img)
