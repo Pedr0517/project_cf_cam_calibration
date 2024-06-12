@@ -26,28 +26,27 @@ class DroneInspector(DroneInterface):
         self.box_position = None
 
         self.create_subscription(RigidBodies, '/mocap4r2/rigid_bodies',
-                                 self.callback, 10)  # double check topic name
+                                 self.charuco_real_callback, 10)  # double check topic name
 
-        self.create_subscription(PoseStamped, '/box_0/box_0/pose', self.box_pose_callback, 10)
+        self.create_subscription(PoseStamped, '/box_0/box_0/pose', self.charuco_sim_callback, 10)
 
         self.create_subscription(
             Image, 'sensor_measurements/cam/image_raw', self.image_upload, 10)
-        print("drone_inspector intitialized")
 
         self.i = 0
 
-    def box_pose_callback(self, msg: PoseStamped):
+    def charuco_sim_callback(self, msg: PoseStamped):
 
         self.charuco_pose = msg.pose.position
 
         # print(f"Box position: {self.box_position}")  # Debugging
 
-    def callback(self, msg: RigidBodies):
+    def charuco_real_callback(self, msg: RigidBodies):
         rbody: RigidBody
         for rbody in msg.rigidbodies:
             if rbody.rigid_body_name == "charuco_board":  # double check name
                 print(f"{rbody.pose=}")  # Debug
-                self.charuco_pose = rbody.pose
+                self.charuco_pose = rbody.pose.position
                 break
 
     def image_upload(self, msg: Image):
@@ -83,7 +82,6 @@ def drone_path(drone_inspector: DroneInspector, path_data: list, angle: float):
     speed = 0.5
     takeoff_height = 1.0
     path = path_data
-    print(path)
     angle_rad = angle
 
     sleep_time = 2.0
@@ -116,7 +114,8 @@ def drone_path(drone_inspector: DroneInspector, path_data: list, angle: float):
         sleep(sleep_time)
 
         if input('Repeat path (Y/n)? ') == 'n':
-            drone_inspector.go_to.go_to_path_facing(path[-1][0], path[-1][1], 1.0, speed=speed)
+            if path[-1][2] < 0.5:  # prevents drone hitting ground
+                drone_inspector.go_to.go_to_path_facing(path[-1][0], path[-1][1], 1.0, speed=speed)
             break
 
     # LAND #
@@ -164,6 +163,7 @@ if __name__ == '__main__':
 
     center_charruco = [uav.charuco_pose.x,
                        uav.charuco_pose.y, uav.charuco_pose.z]
+
     print(center_charruco)
 
     x_dist = np.linspace(center_charruco[0] + args.x_max,
