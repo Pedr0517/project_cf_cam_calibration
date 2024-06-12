@@ -7,7 +7,7 @@
             <visual name='visual'>
                 <geometry>
                     <box>
-                        <size>7 1e-6 7</size>
+                        <size>1.2 1e-6 1.2</size>
                     </box>
                 </geometry>
                 <material>
@@ -15,8 +15,8 @@
                     <specular>1.0 1.0 1.0</specular>
 		                <pbr>
 			                <metal>
-			                    <albedo_map>materials/textures/chessboard_sim.png</albedo_map>
-			                    <normal_map>materials/textures/chessboard_sim.png</normal_map>
+			                    <albedo_map>materials/textures/chessboard.png</albedo_map>
+			                    <normal_map>materials/textures/chessboard.png</normal_map>
 			                </metal>
 		                </pbr>
                 </material>

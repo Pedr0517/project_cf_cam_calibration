@@ -70,6 +70,7 @@ def drone_path(drone_inspector: DroneInspector, path_data: list, angle: float):
     speed = 0.5
     takeoff_height = 1.0
     path = path_data
+    print(path)
     angle_rad = angle
 
     sleep_time = 2.0
@@ -129,7 +130,7 @@ if __name__ == '__main__':
     parser.add_argument('--x_max', type=float, default=0.75, help='Max x bound')
     parser.add_argument('--x_min', type=float, default=0.75, help='Min x bound')
 
-    parser.add_argument('--y_max', type=float, default=0.75, help='Max y bound')
+    parser.add_argument('--y_max', type=float, default=-0.75, help='Max y bound')
     parser.add_argument('--y_min', type=float, default=0.75, help='Min y bound')
 
     parser.add_argument('--z_center', type=float, default=0.5, help='Distance away from center')
@@ -148,6 +149,7 @@ if __name__ == '__main__':
 
     center_charruco = [uav.charuco_pose.position.x,
                        uav.charuco_pose.position.y, uav.charuco_pose.position.z]
+    center_charruco = [6, 9, 0.6]  # simulation purposes
 
     x_dist = np.linspace(center_charruco[0] + args.x_max,
                          center_charruco[0] - args.x_min, args.num_img)
