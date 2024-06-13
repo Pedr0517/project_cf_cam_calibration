@@ -114,7 +114,7 @@ def drone_path(drone_inspector: DroneInspector, path_data: list, angle: float):
         sleep(sleep_time)
 
         if input('Repeat path (Y/n)? ') == 'n':
-            if path[-1][2] < 0.5:  # prevents drone hitting ground
+            if path[-1][2] <= 0.5:  # prevents drone hitting ground
                 drone_inspector.go_to.go_to_path_facing(path[-1][0], path[-1][1], 1.0, speed=speed)
             break
 
@@ -144,20 +144,20 @@ if __name__ == '__main__':
     parser.add_argument('--x_max', type=float, default=0.75, help='Max x bound')
     parser.add_argument('--x_min', type=float, default=0.75, help='Min x bound')
 
-    parser.add_argument('--y_max', type=float, default=-0.75, help='Max y bound')
+    parser.add_argument('--y_max', type=float, default=0.75, help='Max y bound')
     parser.add_argument('--y_min', type=float, default=0.75, help='Min y bound')
 
     parser.add_argument('--z_center', type=float, default=0.5, help='Distance away from center')
 
-    parser.add_argument('--num_seg', type=float, default=3, help='Number of segments')
+    parser.add_argument('--num_seg', type=int, default=3, help='Number of segments')
 
-    parser.add_argument('--num_img', type=float, default=3, help='Number of images')
+    parser.add_argument('--num_img', type=int, default=3, help='Number of images')
 
     parser.add_argument('--yaw_angle', type=float, default=0, help='Yaw drone will take path with')
 
     args = parser.parse_args()
 
-    # XYZ Bounds#
+    # XYZ Bounds
     # size of charruco in real life is 120x120 cm
     # when you tell drone to move one, that is equivilant to 100 cm
 

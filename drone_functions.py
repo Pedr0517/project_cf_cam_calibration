@@ -54,12 +54,12 @@ def path_plot(x_dist: list, y_dist: list, z_dist: list, num_img: int) -> plt:
     ax.scatter(x_path, y_path, z_path, color="black")
 
     # Charucco Board#
-    board_x = [5.4, 6.6, 6.6, 5.4, 5.4]  # [min,min,max,max,min]
-    board_y = [9, 9, 9, 9, 9]  # [min,min,max,max,min]
-    board_z = [1.2, 1.2, 0, 0, 1.2]
+    # board_x = [5.4, 6.6, 6.6, 5.4, 5.4]  # [min,min,max,max,min]
+    # board_y = [9, 9, 9, 9, 9]  # [min,min,max,max,min]
+    # board_z = [1.2, 1.2, 0, 0, 1.2]
 
-    ax.plot3D(board_x, board_y, board_z, color="blue")
-    ax.scatter(board_x, board_y, board_z, color="red")
+    # ax.plot3D(board_x, board_y, board_z, color="blue")
+    # ax.scatter(board_x, board_y, board_z, color="red")
 
     # Set Labels#
     ax.set_xlabel('x (m)')
@@ -77,8 +77,8 @@ if __name__ == '__main__':
     parser.add_argument('--x_max', type=float, default=0.75, help='Max x bound')
     parser.add_argument('--x_min', type=float, default=0.75, help='Min x bound')
 
-    parser.add_argument('--y_max', type=float, default=-0.25, help='Max y bound')
-    parser.add_argument('--y_min', type=float, default=0.25, help='Min y bound')
+    parser.add_argument('--y_max', type=float, default=0.75, help='Max y bound')
+    parser.add_argument('--y_min', type=float, default=0.75, help='Min y bound')
 
     parser.add_argument('--z_center', type=float, default=0.5, help='Distance away from center')
 
@@ -88,7 +88,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    center_board = [0.6, 9, 0.6]  # [x,y,z]
+    center_board = [1, -9, 1]  # [x,y,z]
 
     # XYZ Bounds#
     x_dist = np.linspace(center_board[0] + args.x_max,
