@@ -2,7 +2,6 @@
 import os
 import numpy as np
 import rclpy
-from geometry_msgs.msg import Pose
 from as2_python_api.drone_interface import DroneInterface
 import cv2
 from sensor_msgs.msg import Image
