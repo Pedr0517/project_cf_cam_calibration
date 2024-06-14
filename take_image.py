@@ -24,7 +24,7 @@ class DroneInspector(DroneInterface):
         self.get_logger().info('Image received')
 
         # Location and name
-        folder_dir = "drone_images_off"
+        folder_dir = "drone_images_manual"
 
         # Converting ROS images to compatible file
         image_np = np.frombuffer(self.image_received.data, dtype=np.uint8)
