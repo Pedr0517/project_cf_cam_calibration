@@ -1,4 +1,5 @@
 """Pedro Ramos"""
+import numpy as np
 
 
 def drone_points(x_dist: list, y_dist: list, z_dist: list, num_img: int) -> list:

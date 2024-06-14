@@ -77,7 +77,7 @@ if __name__ == '__main__':
     parser.add_argument('--x_max', type=float, default=0.75, help='Max x bound')
     parser.add_argument('--x_min', type=float, default=0.75, help='Min x bound')
 
-    parser.add_argument('--y_max', type=float, default=0.75, help='Max y bound')
+    parser.add_argument('--y_max', type=float, default=-0.75, help='Max y bound')
     parser.add_argument('--y_min', type=float, default=0.75, help='Min y bound')
 
     parser.add_argument('--z_center', type=float, default=0.5, help='Distance away from center')
@@ -88,7 +88,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    center_board = [1, -9, 1]  # [x,y,z]
+    center_board = [6, 9, 1]  # [x,y,z]
 
     # XYZ Bounds#
     x_dist = np.linspace(center_board[0] + args.x_max,

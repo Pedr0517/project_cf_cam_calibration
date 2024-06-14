@@ -50,14 +50,14 @@ class DroneInspector(DroneInterface):
                 break
 
     def image_upload(self, msg: Image):
-
+        self.get_logger().info('Image received')
         self.image_received = msg
 
     def save_image(self):
         self.get_logger().info('Image received')
 
         # Location and name
-        folder_dir = "drone_images"
+        folder_dir = "drone_images_run"
 
         # Converting ROS images to compatible file
         image_np = np.frombuffer(self.image_received.data, dtype=np.uint8)
@@ -134,6 +134,7 @@ if __name__ == '__main__':
     rclpy.init()
 
     uav = DroneInspector("drone0", verbose=False, use_sim_time=True)
+    print("drone running")
     sleep(3)
     # Arguments#
     # For any bounds, use m
