@@ -45,14 +45,17 @@ class DroneInspector(DroneInterface):
 
 def manual_image(drone_inspector: DroneInspector):
     while True:
-        answer = input("T to take image, Exit to turn off: ").lower()
+        answer = input("T to take image, Exit to shut off: ").lower()
 
         if answer == "t":
             drone_inspector.save_image()
 
-        if answer == "exit":
+        elif answer == "exit":
             print("Shutting down")
             break
+
+        else:
+            print("Unknown selection, T to take image, Exit to shut off")
 
 
 if __name__ == '__main__':
