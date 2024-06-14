@@ -55,7 +55,7 @@ def manual_image(drone_inspector: DroneInspector):
             break
 
         else:
-            print("Unknown selection, T to take image, Exit to shut off")
+            print("Unknown selection")
 
 
 if __name__ == '__main__':
