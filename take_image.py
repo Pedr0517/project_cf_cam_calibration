@@ -12,7 +12,9 @@ class DroneInspector(DroneInterface):
         super().__init__(drone_id=drone_id, verbose=verbose, use_sim_time=use_sim_time)
 
         self.create_subscription(
-            Image, 'sensor_measurements/cam/image_raw', self.image_upload, 10)  # change topic name
+            Image, 'sensor_measurements/camera', self.image_upload, 10)  # change topic name
+
+        self.image_received = None
 
         self.i = 0
 
