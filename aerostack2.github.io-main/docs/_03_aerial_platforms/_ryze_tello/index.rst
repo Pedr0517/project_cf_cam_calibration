@@ -145,5 +145,5 @@ Example of launch command:
 
 .. code-block:: bash
 
-  ros2 launch as2_platform_tello tello_platform.launch.py namespace:=drone0 1
+  ros2 launch as2_platform_tello tello_platform.launch.py namespace:=drone0
 
