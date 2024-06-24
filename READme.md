@@ -9,9 +9,9 @@ The folder contains a number of Python3 scripts which will be used to calibrate 
 
 With the given Python3 scripts, a few of them allow one to obtain a number of images in PNG format. 
 
-* mission_Test.py
-* take_image.py
-* save_image.py
+* [mission_Test.py](mission_project/mission_Test.py)
+* [take_image.py](mission_project/take_image.py)
+* [save_image.py](save_image.py)
 
 #### mission_Test.py
 The use of **mission_Test.py** allows for image capturing whilst being fully autonomous. This is done by giving the script a number of paramaters before running the code. Once the parameters are given, the script will produce a path through some backend Python3 scritps; which can be found inside the folder. Once script is running, drone will follow path and at each point the drone pauses, an image will be uploaded to the wanted directory. Once path is finished, the option to repeat path will be shown, if one chooses not to repeat path, drone will land safely and shutoff.
@@ -79,8 +79,8 @@ style = "margin-bottom: 20px;"/>
 ### Calibration
 Inside the folder, two Python3 scripts help with the claibration process.
 
-* charucoCalib.py
-* camera_info.py
+* [charucoCalib.py](mission_project/charucoCalib.py)
+* [camera_info.py](mission_project/camera_info.py)
 
 #### charucoCalib.py
 The script **charucoCalib.py** allows for calibration of the images to occur. Takes in images from a specified directoy and follows a calibration process. Once completed, information regarding the calibration will be obtained. Note, when running calibration with large number of images could result in code taking longer to run.
