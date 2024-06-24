@@ -69,6 +69,10 @@ class DroneInspector(DroneInterface):
         image_name = f'image_taken{self.i}.png'
         image_path = os.path.join(folder_dir, image_name)
 
+        # Checking directory
+        if not os.path.exists(folder_dir):
+            os.makedirs(folder_dir)
+
         # Adding image to folder
         cv2.imwrite(image_path, image_np)
 
