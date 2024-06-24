@@ -66,7 +66,7 @@ When doing a calibration, the images used for the calibration are vital. When ta
 
 <img src="../project_cf_cam_calibration/drone_images/drone_images_manual_coco/image_taken15.png" alt="Tello drone calibration image example" width="300" style="margin-bottom: 30px;"/>
 
-<img src="../project_cf_cam_calibration/drone_images/drone_images_manual_coco/image_taken1.png" width="300"
+<img src="../drone_images_manual_coco/image_taken1.png" width="300"
 style = "margin-bottom: 20px;"/>
 
 <img src="../project_cf_cam_calibration/drone_images/drone_images_manual_coco/image_taken53.png" alt="Tello drone calibration image example" width="300"
