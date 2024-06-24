@@ -49,7 +49,7 @@ python3 take_image.py
 ```
 Once the line of code is ran inside the terminal, box should appear, like the one below. Left click it to save an image.
 
-<img src="../project_cf_cam_calibration/mission_project/take_image_box_example.png" alt="Tello drone calibration image example" width="300" style="margin-bottom: 30px;"/>
+<img src="./take_image_box_example.png" alt="Tello drone calibration image example" width="300" style="margin-bottom: 30px;"/>
 
 #### save_image.py
 The use of **save_image.py** allows for image capturing while having full controll of the drone. Though with this script, one will not be able to elect when an image is uploaded to its wanted directory. Once the script is ran, images will automatically upload to the directory of choice and will only shutoff once script is killed. 
@@ -66,13 +66,13 @@ When doing a calibration, the images used for the calibration are vital. When ta
 
 <img src="./image_taken15.png" width="300" style="margin-bottom: 30px;"/>
 
-<img src="../project_cf_cam_calibration/drone_images/image_taken1.png" width="300"
+<img src="./image_taken1.png" width="300"
 style = "margin-bottom: 20px;"/>
 
-<img src="../project_cf_cam_calibration/drone_images/drone_images_manual_coco/image_taken53.png" alt="Tello drone calibration image example" width="300"
+<img src="./image_taken53.png" alt="Tello drone calibration image example" width="300"
 style = "margin-bottom: 20px;"/>
 
-<img src="../project_cf_cam_calibration/drone_images/drone_images_manual_coco/image_taken49.png" alt="Tello drone calibration image example" width="300"
+<img src="./image_taken49.png" alt="Tello drone calibration image example" width="300"
 style = "margin-bottom: 20px;"/>
 
 
