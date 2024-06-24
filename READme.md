@@ -11,7 +11,7 @@ With the given Python3 scripts, a few of them allow one to obtain a number of im
 
 * [mission_Test.py](mission_project/mission_Test.py)
 * [take_image.py](mission_project/take_image.py)
-* [save_image.py](mission_porject/save_image.py)
+* [save_image.py](mission_project/save_image.py)
 
 #### mission_Test.py
 The use of **mission_Test.py** allows for image capturing whilst being fully autonomous. This is done by giving the script a number of paramaters before running the code. Once the parameters are given, the script will produce a path through some backend Python3 scritps; which can be found inside the folder. Once script is running, drone will follow path and at each point the drone pauses, an image will be uploaded to the wanted directory. Once path is finished, the option to repeat path will be shown, if one chooses not to repeat path, drone will land safely and shutoff.
@@ -52,7 +52,7 @@ Once the line of code is ran inside the terminal, box should appear, like the on
 <img src="../project_cf_cam_calibration/mission_project/take_image_box_example.png" alt="Tello drone calibration image example" width="300" style="margin-bottom: 30px;"/>
 
 #### save_image.py
-The use of **save_image.py** allows for image capturing while having full controll of the drone. Though with this script, one will not be able to elect when an image is uploaded to its wanted directory. Once the script is ran, images will automatically upload to the directory of choice and will only shutoff once scirpt is killed. 
+The use of **save_image.py** allows for image capturing while having full controll of the drone. Though with this script, one will not be able to elect when an image is uploaded to its wanted directory. Once the script is ran, images will automatically upload to the directory of choice and will only shutoff once script is killed. 
 
 
 Below is an example of how to run the script.
@@ -64,9 +64,9 @@ python3 save_image.py
 ### Examples of Images
 When doing a calibration, the images used for the calibration are vital. When taking images, take images at different distances and yaws. This will allow for the calibration to have a precise reading of the charuco. Below are examples of different images used for the same calibration.
 
-<img src="../../drone_images/image_taken15.png" width="300" style="margin-bottom: 30px;"/>
+<img src="../project_cf_cam_calibration/drone_images/image_taken15.png" width="300" style="margin-bottom: 30px;"/>
 
-<img src="../drone_images/image_taken1.png" width="300"
+<img src="../project_cf_cam_calibration/drone_images/image_taken1.png" width="300"
 style = "margin-bottom: 20px;"/>
 
 <img src="../project_cf_cam_calibration/drone_images/drone_images_manual_coco/image_taken53.png" alt="Tello drone calibration image example" width="300"
