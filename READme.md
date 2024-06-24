@@ -40,7 +40,7 @@ parser.add_argument('--x_max', type=float, default=0.60, help='Max x bound')
 ```
 
 #### take_image.py
-The use of **take_image.py** allows one to capture images while having full control of the drone. The whole point of this script is to allow one to manouver the drone manually and take images when doing so. When running the script, a small box will appear. This box will allow for the user to have interface with the drone. When one interferes with the system, an image will be uploaded to its wanted directory. Once image capturing is completed, close box to kill script.
+The use of **take_image.py** allows one to capture images while having full control of the drone. The whole point of this script is to allow one to manoeuvre the drone manually and take images when doing so. When running the script, a small box will appear. This box will allow for the user to have interface with the drone. When one interferes with the system, an image will be uploaded to its wanted directory. Once image capturing is completed, close box to kill script.
 
 Below is an example of how to run the script.
 
@@ -66,8 +66,7 @@ When doing a calibration, the images used for the calibration are vital. When ta
 
 <img src="./image_taken15.png" width="300" style="margin-bottom: 30px;"/>
 
-<img src="./image_taken1.png" width="300"
-style = "margin-bottom: 20px;"/>
+<img src="./image_taken1.png" width="300" style = "margin-bottom: 20px;"/>
 
 <img src="./image_taken53.png" alt="Tello drone calibration image example" width="300"
 style = "margin-bottom: 20px;"/>
@@ -77,7 +76,7 @@ style = "margin-bottom: 20px;"/>
 
 
 ### Calibration
-Inside the folder, two Python3 scripts help with the claibration process.
+Inside the folder, two Python3 scripts help with the calibration process.
 
 * [charucoCalib.py](mission_project/charucoCalib.py)
 * [camera_info.py](mission_project/camera_info.py)
