@@ -4,51 +4,72 @@ import numpy as np
 import cv2
 from cv2 import aruco
 import os
+import yaml
 
 
-def add_file(file_path, label, matrix, fmt="%f"):
-    """Writing to text file when calling it """
-    with open(file_path, 'a') as f:
-        f.write(f"{label}:\n")
-        np.savetxt(f, matrix, fmt=fmt)
-        f.write('\n')
-
-
-def cam_info(mtx, distorted):
+def cam_info(mtx, distorted, size):
     """Creating text file with calibration info formatted"""
 
     # note, change path when seperating calibrations
-    file_path = "camera_calibration_info.txt"
+    file_path = "camera_calibration_info.yml"
     open(file_path, 'w').close()
 
-    K_mtx = mtx
+    K_mtx = mtx.flatten()
+    print(K_mtx)
 
     distorted_val = distorted[:5]
 
-    R_mtx = np.array([[1, 0, 0],
-                      [0, 1, 0],
-                      [0, 0, 1]])
+    R_mtx = np.array([1, 0, 0,
+                     0, 1, 0,
+                     0, 0, 1])
 
-    P_mtx = np.array([[K_mtx[0][0], 0, K_mtx[0][2], 0],
-                      [0, K_mtx[1][1], K_mtx[1][2], 0],
-                      [0, 0, 1, 0]])
+    P_mtx = np.array([K_mtx[0], 0, K_mtx[2], 0,
+                      0, K_mtx[4], K_mtx[5], 0,
+                      0, 0, 1, 0])
 
     # Organizing calibration data#
     print("D: ")
     print(distorted_val)
-    add_file(file_path, 'D', distorted_val)
+    # add_file(file_path, distorted_val)
     print()
     print("K: ")
     print(K_mtx)
-    add_file(file_path, 'K', K_mtx)
+    # add_file(file_path, K_mtx)
     print()
     print("R: ")
     print(R_mtx)
-    add_file(file_path, 'R', R_mtx)
+    # add_file(file_path, R_mtx)
     print()
     print("P: ")
     print(P_mtx)
-    add_file(file_path, 'P', P_mtx)
+    # add_file(file_path, 'P', P_mtx)
+
+    # Extra info#
+    img_width = size[1]
+    img_height = size[0]
+    camera = "camera"
+    dist_model = """plumb_bob"""
+
+    # Dictionary for YAML file#
+    cam_data = {
+        "//**": {
+            "ros_parameters": {
+                "camera": {
+                    "img_width": img_width,
+                    "img_height": img_height,
+                    "camera_name": camera,
+                    "camera_matrix": K_mtx.tolist(),
+                    "distortion_model": dist_model,
+                    "distortion_coefficients": distorted_val.tolist(),
+                    "rectification_matrix": R_mtx.tolist(),
+                    "projection_matrix": P_mtx.tolist()
+                }
+            }
+        }
+    }
+
+    with open(file_path, 'w') as f:
+        yaml.dump(cam_data, f, default_flow_style=None, sort_keys=False)
 
 
 if __name__ == "__main__":
@@ -79,10 +100,11 @@ if __name__ == "__main__":
 
     allCorners, allIds, imsize = read_chessboards(
         images, args.minimun_detected_markers, aruco_dict, board)
+
     ret, mtx, dist, rvecs, tvecs = calibrate_camera(allCorners, allIds, imsize, board)
 
     mtx, distorted = print_calib_matrix(mtx, dist, args.all_distortion_coefficients)
-    cam_info(mtx, distorted)
+    cam_info(mtx, distorted, imsize)
 
     if args.show_undistorted:
         for i in range(0, len(images)):
