@@ -85,7 +85,7 @@ Inside the folder, two Python3 scripts help with the calibration process.
 The script **charucoCalib.py** allows for calibration of the images to occur. Takes in images from a specified directoy and follows a calibration process. Once completed, information regarding the calibration will be obtained. Note, when running calibration with large number of images could result in code taking longer to run.
 
 #### camera_info.py
-The script **camera_info** helps the user have info regarding the calibration to be formatted in a seperate txt file. This script uses **charucoCalib** to obtain information regarding the calibration.
+The script **camera_info** helps the user have info regarding the calibration to be formatted in a seperate yml file. This script uses **charucoCalib** to obtain information regarding the calibration.
 
 Below is an exmaple of how to run the script inside the terminal. Argument "data_dir" allows for the script to know where to take in images from.
 
