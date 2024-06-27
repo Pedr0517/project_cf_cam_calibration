@@ -24,7 +24,7 @@ python3 mission_Test --y_max -1 --y_min 1 --num_img 3 --yaw_angle 1.57
 Below is the list of all arguments withing the script.
 
 ```bash
-parser.add_argument('--x_max', type=float, default=0.60, help='Max x bound')
+    parser.add_argument('--x_max', type=float, default=0.60, help='Max x bound')
     parser.add_argument('--x_min', type=float, default=0.60, help='Min x bound')
 
     parser.add_argument('--y_max', type=float, default=0.75, help='Max y bound')
