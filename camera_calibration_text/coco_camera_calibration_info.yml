@@ -3,7 +3,7 @@
     camera:
       image_width: 960
       image_height: 720
-      camera_name: camera
+      camera_name: tello_camera
       camera_matrix:
         rows: 3
         cols: 3
