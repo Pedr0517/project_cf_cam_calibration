@@ -11,21 +11,20 @@ def cam_info(mtx, distorted, size):
     """Creating text file with calibration info formatted"""
 
     # note, change path when seperating calibrations
-    file_path = "camera_calibration_info.yml"
+    file_path = "coco_camera_calibration_info.yml"
     open(file_path, 'w').close()
 
     K_mtx = mtx.flatten()
-    print(K_mtx)
 
     distorted_val = distorted[:5]
 
-    R_mtx = np.array([1, 0, 0,
-                     0, 1, 0,
-                     0, 0, 1])
+    R_mtx = np.array([1.0, 0.0, 0.0,
+                     0.0, 1.0, 0.0,
+                     0.0, 0.0, 1.0])
 
-    P_mtx = np.array([K_mtx[0], 0, K_mtx[2], 0,
-                      0, K_mtx[4], K_mtx[5], 0,
-                      0, 0, 1, 0])
+    P_mtx = np.array([K_mtx[0], 0.0, K_mtx[2], 0.0,
+                      0.0, K_mtx[4], K_mtx[5], 0.0,
+                      0.0, 0.0, 1.0, 0.0])
 
     # Organizing calibration data#
     print("D: ")
@@ -55,8 +54,8 @@ def cam_info(mtx, distorted, size):
         "//**": {
             "ros_parameters": {
                 "camera": {
-                    "img_width": img_width,
-                    "img_height": img_height,
+                    "image_width": img_width,
+                    "image_height": img_height,
                     "camera_name": camera,
                     "camera_matrix": K_mtx.tolist(),
                     "distortion_model": dist_model,
