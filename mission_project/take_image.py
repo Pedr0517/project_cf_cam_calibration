@@ -13,7 +13,7 @@ class DroneInspector(DroneInterface):
         super().__init__(drone_id=drone_id, verbose=verbose, use_sim_time=use_sim_time)
 
         self.create_subscription(
-            Image, '/drone_sim_aerostack_0/aideck/image', self.image_upload, 10)  # change topic name
+            Image, '/drone0/sensor_measurements/camera', self.image_upload, 10)  # change topic name
 
         self.image_received = None
 
@@ -29,8 +29,12 @@ class DroneInspector(DroneInterface):
 
         self.get_logger().info('Image received')
 
-        # Location and name
+        # Location and name#
         folder_dir = "drone_images_manual"
+
+        # Checks for foler path#
+        if not os.path.exists(folder_dir):
+            os.makedirs(folder_dir)
 
         if self.image_received is None:
             print("no image received yet")
