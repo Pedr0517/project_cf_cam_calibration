@@ -57,11 +57,27 @@ def cam_info(mtx, distorted, size, filedir):
                     "image_width": img_width,
                     "image_height": img_height,
                     "camera_name": camera,
-                    "camera_matrix": K_mtx.tolist(),
+                    "camera_matrix": {
+                        "rows": 3,
+                        "cols": 3,
+                        "data": K_mtx.tolist()
+                    },
                     "distortion_model": dist_model,
-                    "distortion_coefficients": distorted_val.tolist(),
-                    "rectification_matrix": R_mtx.tolist(),
-                    "projection_matrix": P_mtx.tolist()
+                    "distortion_coefficients": {
+                        "rows": 1,
+                        "cols": 5,
+                        "data": distorted_val.tolist()
+                    },
+                    "rectification_matrix": {
+                        "rows": 3,
+                        "cols": 3,
+                        "data": R_mtx.tolist()
+                    },
+                    "projection_matrix": {
+                        "rows": 3,
+                        "cols": 4,
+                        "data": P_mtx.tolist()
+                    }
                 }
             }
         }
@@ -105,6 +121,7 @@ if __name__ == "__main__":
     ret, mtx, dist, rvecs, tvecs = calibrate_camera(allCorners, allIds, imsize, board)
 
     mtx, distorted = print_calib_matrix(mtx, dist, args.all_distortion_coefficients)
+
     cam_info(mtx, distorted, imsize, args.filedir)
 
     if args.show_undistorted:
