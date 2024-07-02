@@ -51,8 +51,8 @@ def cam_info(mtx, distorted, size, filedir):
 
     # Dictionary for YAML file#
     cam_data = {
-        "//**": {
-            "ros_parameters": {
+        "/**": {
+            "ros__parameters": {
                 "camera": {
                     "image_width": img_width,
                     "image_height": img_height,
