@@ -25,7 +25,7 @@ def read_chessboards(images, minimum_detected_markers, aruco_dict, board):
         frame = cv2.imread(im)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(gray, aruco_dict)
-        if len(ids) < minimum_detected_markers:
+        if len(ids) < 10:
             print("Not enough markers found in image {0}".format(im))
             continue
 
@@ -127,7 +127,7 @@ if __name__ == "__main__":
     parser.add_argument("--show-aruco-board", action="store_true", help="Show the aruco board.")
     parser.add_argument("--show-undistorted", action="store_true",
                         help="Show the undistorted images.")
-    parser.add_argument("--minimun-detected-markers", type=int, default=6,
+    parser.add_argument("--minimun-detected-markers", type=int, default=7,
                         help="Minimum number of markers to detect in the image.")
     parser.add_argument("--all_distortion_coefficients", action="store_true",
                         help="Show all distortion coefficients.")
@@ -137,7 +137,7 @@ if __name__ == "__main__":
     # aruco_dict = aruco.Dictionary_get(aruco.DICT_6X6_250)
     # board = aruco.CharucoBoard_create(11, 11, .1, .08, aruco_dict)
     aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
-    board = cv2.aruco.CharucoBoard((11, 11), .019, .015, aruco_dict)
+    board = cv2.aruco.CharucoBoard((11, 11), .1, .08, aruco_dict)
     if args.show_aruco_board:
         plot_aruco_board(board)
 
