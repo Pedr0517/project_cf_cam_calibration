@@ -7,11 +7,11 @@ import os
 import yaml
 
 
-def cam_info(mtx, distorted, size):
+def cam_info(mtx, distorted, size, filedir):
     """Creating text file with calibration info formatted"""
 
     # note, change path when seperating calibrations
-    file_path = "coco_camera_calibration_info.yml"
+    file_path = filedir
     open(file_path, 'w').close()
 
     K_mtx = mtx.flatten()
@@ -83,13 +83,15 @@ if __name__ == "__main__":
                         help="Minimum number of markers to detect in the image.")
     parser.add_argument("--all_distortion_coefficients", action="store_true",
                         help="Show all distortion coefficients.")
+    parser.add_argument("--filedir", type=str,
+                        default="camera_calibration_info.yml", help="Directory for info storage")
 
     args = parser.parse_args()
 
     # aruco_dict = aruco.Dictionary_get(aruco.DICT_6X6_250)
     # board = aruco.CharucoBoard_create(11, 11, .1, .08, aruco_dict)
     aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
-    board = cv2.aruco.CharucoBoard((11, 11), .019, .015, aruco_dict)
+    board = cv2.aruco.CharucoBoard((11, 11), .1, .08, aruco_dict)
 
     if args.show_aruco_board:
         plot_aruco_board(board)
@@ -103,7 +105,7 @@ if __name__ == "__main__":
     ret, mtx, dist, rvecs, tvecs = calibrate_camera(allCorners, allIds, imsize, board)
 
     mtx, distorted = print_calib_matrix(mtx, dist, args.all_distortion_coefficients)
-    cam_info(mtx, distorted, imsize)
+    cam_info(mtx, distorted, imsize, args.filedir)
 
     if args.show_undistorted:
         for i in range(0, len(images)):
