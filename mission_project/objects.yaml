@@ -1,0 +1,11 @@
+---
+objects:
+  - type: pose
+    parent_frame: earth
+    frame: charuco_frame
+    pose_topic: '/box_0/box_0/pose' #sim charuco
+    #pose_topic: '/mocap4r2/rigid_bodies' #real charuco
+  # - type: mocap
+  #   rigid_bodies: 
+  #     - rigid_body: gate_0
+  #       frame: object_0
