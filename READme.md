@@ -19,24 +19,27 @@ The use of **mission_Test.py** allows for image capturing whilst being fully aut
 Below is an example of how to run the script inside the terminal. Both "y_max and y_min" control the y bounds for the path the drone will take. Argument "num_img" allows for the user to control the num of images along each segment the drone makes. Finally "yaw_angle" controls the yaw of the drone in radians.
 
 ```bash
-python3 mission_Test --y_max -1 --y_min 1 --num_img 3 --yaw_angle 1.57
+python3 mission_Test.py
 ```
 Below is the list of all arguments withing the script.
 
 ```bash
+    parser = argparse.ArgumentParser(description='Obtain bounds for drone')
+
     parser.add_argument('--x_max', type=float, default=0.60, help='Max x bound')
     parser.add_argument('--x_min', type=float, default=0.60, help='Min x bound')
 
-    parser.add_argument('--y_max', type=float, default=0.75, help='Max y bound')
-    parser.add_argument('--y_min', type=float, default=0.75, help='Min y bound')
+    parser.add_argument('--y_dist', type=float, default=1.0, help='y bound')
 
-    parser.add_argument('--z_center', type=float, default=0.5, help='Distance away from center')
+    parser.add_argument('--z_max', type=float, default=0.5, help='Max z bound')
+    parser.add_argument('--z_min', type=float, default=0.5, help='Min z bound')
 
     parser.add_argument('--num_seg', type=int, default=3, help='Number of segments')
 
     parser.add_argument('--num_img', type=int, default=3, help='Number of images')
 
-    parser.add_argument('--yaw_angle', type=float, default=0, help='Yaw drone will take path with')
+    parser.add_argument('--yaw_angle', type=float, default=1.57,
+                        help='Yaw drone will take path with')
 ```
 
 #### take_image.py
