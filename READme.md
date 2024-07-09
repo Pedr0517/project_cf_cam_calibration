@@ -101,27 +101,32 @@ python3 camera_info.py --datadir "./drone_images_auto/"
  Below is an example of the text file writing that would contain all the necessary information for the camera calibration. Note K, R, P are matrices.
 
 ```plaintext
-Calibration parameters for tello:
+Calibration parameters:
 
-D:
-39.465930
-346.708277
-0.000981
--0.001464
-231.515966
-
-K:
-917.648825 0.000000 479.853110
-0.000000 917.648825 357.144120
-0.000000 0.000000 1.000000
-
-R:
-1.000000 0.000000 0.000000
-0.000000 1.000000 0.000000
-0.000000 0.000000 1.000000
-
-P:
-917.648825 0.000000 479.853110 0.000000
-0.000000 917.648825 357.144120 0.000000
-0.000000 0.000000 1.000000 0.000000
+/**:
+  ros__parameters:
+    camera:
+      image_width: 1920
+      image_height: 1080
+      camera_name: camera
+      camera_matrix:
+        rows: 3
+        cols: 3
+        data: [761.0057975745207, 0.0, 1001.3167405267623, 0.0, 761.0057975745207,
+          513.5596034596441, 0.0, 0.0, 1.0]
+      distortion_model: plumb_bob
+      distortion_coefficients:
+        rows: 1
+        cols: 5
+        data: [0.8974843864360182, 0.14011134541456177, -0.00025846537470598866, 0.00016483369094559268,
+          0.0019942725914891325]
+      rectification_matrix:
+        rows: 3
+        cols: 3
+        data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+      projection_matrix:
+        rows: 3
+        cols: 4
+        data: [761.0057975745207, 0.0, 1001.3167405267623, 0.0, 0.0, 761.0057975745207,
+          513.5596034596441, 0.0, 0.0, 0.0, 1.0, 0.0]
 ```
