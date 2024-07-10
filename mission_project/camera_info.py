@@ -100,14 +100,16 @@ if __name__ == "__main__":
     parser.add_argument("--all_distortion_coefficients", action="store_true",
                         help="Show all distortion coefficients.")
     parser.add_argument("--filedir", type=str,
-                        default="camera_calibration_info.yml", help="Directory for info storage")
+                        default="camera_calibration_info.yaml", help="Directory for info storage")
 
     args = parser.parse_args()
 
     # aruco_dict = aruco.Dictionary_get(aruco.DICT_6X6_250)
     # board = aruco.CharucoBoard_create(11, 11, .1, .08, aruco_dict)
+
     aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
     board = cv2.aruco.CharucoBoard((11, 11), .1, .08, aruco_dict)
+    # board = cv2.aruco.CharucoBoard((11, 11), .019, .015, aruco_dict)  # small charuco
 
     if args.show_aruco_board:
         plot_aruco_board(board)
