@@ -31,7 +31,7 @@ class DroneInspector(DroneInterface):
         self.create_subscription(PoseStamped, '/box_0/box_0/pose', self.charuco_sim_callback, 10)
 
         self.create_subscription(
-            Image, 'sensor_measurements/cam/image_raw', self.image_upload, 10)
+            Image, '/drone0/sensor_measurements/front_camera/image_raw', self.image_upload, 10)
 
         self.i = 0
 
@@ -45,7 +45,7 @@ class DroneInspector(DroneInterface):
         rbody: RigidBody
         for rbody in msg.rigidbodies:
             if rbody.rigid_body_name == "charuco_board":  # double check name
-                print(f"{rbody.pose=}")  # Debug
+                # print(f"{rbody.pose=}")  # Debug
                 self.charuco_pose = rbody.pose.position
                 break
 
@@ -111,7 +111,8 @@ def drone_path(drone_inspector: DroneInspector, path_data: list, angle: float):
 
         for goal in path:
             print(f"Go to path {goal}")
-            drone_inspector.go_to.go_to_point_with_yaw(goal, speed=speed, angle=angle_rad)
+            drone_inspector.go_to.go_to_point_with_yaw(
+                goal, speed=speed, angle=angle_rad, frame_id="charuco_frame")
             sleep(sleep_time)
             drone_inspector.save_image()
             print("Go to done")
@@ -119,7 +120,8 @@ def drone_path(drone_inspector: DroneInspector, path_data: list, angle: float):
 
         if input('Repeat path (Y/n)? ') == 'n':
             if path[-1][2] <= 0.5:  # prevents drone hitting ground
-                drone_inspector.go_to.go_to_path_facing(path[-1][0], path[-1][1], 1.0, speed=speed)
+                drone_inspector.go_to.go_to_path_facing(
+                    path[-1][0], path[-1][1], 1.0, speed=speed, frame_id="charuco_frame")
             break
 
     # LAND #
@@ -149,16 +151,17 @@ if __name__ == '__main__':
     parser.add_argument('--x_max', type=float, default=0.60, help='Max x bound')
     parser.add_argument('--x_min', type=float, default=0.60, help='Min x bound')
 
-    parser.add_argument('--y_max', type=float, default=0.75, help='Max y bound')
-    parser.add_argument('--y_min', type=float, default=0.75, help='Min y bound')
+    parser.add_argument('--y_dist', type=float, default=1.0, help='y bound')
 
-    parser.add_argument('--z_center', type=float, default=0.5, help='Distance away from center')
+    parser.add_argument('--z_max', type=float, default=0.45, help='Max z bound')
+    parser.add_argument('--z_min', type=float, default=0.45, help='Min z bound')
 
     parser.add_argument('--num_seg', type=int, default=3, help='Number of segments')
 
     parser.add_argument('--num_img', type=int, default=3, help='Number of images')
 
-    parser.add_argument('--yaw_angle', type=float, default=0, help='Yaw drone will take path with')
+    parser.add_argument('--yaw_angle', type=float, default=1.57,
+                        help='Yaw drone will take path with')
 
     args = parser.parse_args()
 
@@ -166,17 +169,16 @@ if __name__ == '__main__':
     # size of charruco in real life is 120x120 cm
     # when you tell drone to move one, that is equivilant to 100 cm
 
-    center_charruco = [uav.charuco_pose.x,
-                       uav.charuco_pose.y, uav.charuco_pose.z]
+    center_charruco = [0, 0, uav.charuco_pose.z - 0.6]
 
     print(center_charruco)
 
     x_dist = np.linspace(center_charruco[0] + args.x_max,
                          center_charruco[0] - args.x_min, args.num_img)
-    y_dist = np.linspace(center_charruco[1] + args.y_max,
-                         center_charruco[1] - args.y_min, args.num_img)
-    z_dist = np.linspace(center_charruco[2] + args.z_center,
-                         center_charruco[2] - args.z_center, args.num_seg)
+    y_dist = np.linspace(center_charruco[1] - args.y_dist,
+                         center_charruco[1] - args.y_dist, args.num_img)
+    z_dist = np.linspace(center_charruco[2] + args.z_max,
+                         center_charruco[2] - args.z_min, args.num_seg)
 
     num_img = args.num_img
 
