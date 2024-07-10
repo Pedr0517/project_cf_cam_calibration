@@ -33,6 +33,12 @@ class DroneInspector(DroneInterface):
         self.create_subscription(
             Image, '/drone0/sensor_measurements/front_camera/image_raw', self.image_upload, 10)
 
+        if os.path.exists("image_count.txt"):
+            with open("image_count.txt", "r") as f:
+                self.i = int(f.read())
+        else:
+            self.i = 0
+
         self.i = 0
 
     def charuco_sim_callback(self, msg: PoseStamped):
@@ -78,6 +84,9 @@ class DroneInspector(DroneInterface):
 
         self.get_logger().info('Image uploaded')
         self.i += 1
+
+        with open("image_count.txt", "w") as f:
+            f.write(str(self.i))
 
 
 def drone_path(drone_inspector: DroneInspector, path_data: list, angle: float):
