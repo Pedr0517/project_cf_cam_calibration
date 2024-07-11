@@ -1,0 +1,39 @@
+/**:
+  ros__parameters:
+  # Package configuration
+    device: "/dev/video0" # Path to the camera device
+    framerate: 30.0 # Frame rate of the camera (fps)
+    encoding: "bgr8" # Image encoding
+    # Camera configuration
+    camera_transform:
+      parent_frame: "base_link" # Parent frame of the camera
+      x: 0.0 # Translation in x (m)
+      y: 0.0 # Translation in y (m)
+      z: 0.0 # Translation in z (m)
+      roll: -1.57079632679 # Rotation around x (rad)
+      pitch: 0.0 # Rotation around y (rad)
+      yaw: -1.57079632679 # Rotation around z (rad)
+    
+    image_width: 1280
+    image_height: 720
+    camera_name: camera
+    camera_matrix:
+      rows: 3
+      cols: 3
+      data: [782.5336404460821, 0.0, 452.4428166388757, 0.0, 782.5336404460821,
+        515.0232068452817, 0.0, 0.0, 1.0]
+    distortion_model: plumb_bob
+    distortion_coefficients:
+      rows: 1
+      cols: 5
+      data: [-0.08760855267804264, 0.006427253440285553, -0.013995862057729125,
+        0.023084272590695884, -0.003870011158796396]
+    rectification_matrix:
+      rows: 3
+      cols: 3
+      data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+    projection_matrix:
+      rows: 3
+      cols: 4
+      data: [782.5336404460821, 0.0, 452.4428166388757, 0.0, 0.0, 782.5336404460821,
+        515.0232068452817, 0.0, 0.0, 0.0, 1.0, 0.0]
