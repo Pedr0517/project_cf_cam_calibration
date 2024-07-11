@@ -13,11 +13,11 @@ class DroneInspector(DroneInterface):
         super().__init__(drone_id=drone_id, verbose=verbose, use_sim_time=use_sim_time)
 
         self.create_subscription(
-            Image, '/drone0/sensor_measurements/camera', self.image_upload, 10)  # change topic name
+            Image, '/drone_sim_aerostack_0/sensor_measurements/camera/image', self.image_upload, 10)  # change topic name
 
         self.image_received = None
 
-        self.i = 0
+        self.i = 120
 
     def image_upload(self, msg: Image):
         """Receives image data"""
@@ -30,7 +30,7 @@ class DroneInspector(DroneInterface):
         self.get_logger().info('Image received')
 
         # Location and name#
-        folder_dir = "drone_images_manual"
+        folder_dir = "wide03_720_images_manual"
 
         # Checks for foler path#
         if not os.path.exists(folder_dir):
