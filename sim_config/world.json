@@ -5,8 +5,8 @@
             "model_type": "quadrotor_base",
             "model_name": "drone0",
             "xyz": [
-                1.0,
-                1.0,
+                -5.0,
+                0.0,
                 0.3
             ],
             "rpy": [
@@ -17,7 +17,7 @@
             "flight_time": 60,
             "payload": [
                 {
-                "model_name":"cam",
+                "model_name":"front_camera",
                 "model_type": "hd_camera"
             	}	
             ]
@@ -28,13 +28,19 @@
     		"model_type": "box",
     		"model_name": "box_0",
             "xyz":[
-                6,
-                9,
+                1,
+                2,
                 0.6
+            ],
+            "rpy":[
+                0,
+                0,
+                0
             ],
             "object_bridges": [
                 "pose"
             ]
+            
         }
     ]
 }

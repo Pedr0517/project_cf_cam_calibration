@@ -1,0 +1,22 @@
+{
+    "world_name": "empty",
+    "drones": [
+        {
+            "model_type": "quadrotor_base",
+            "model_name": "drone0",
+            "xyz": [ 0.15, 2.65, 0.3 ],
+            "rpy": [ 0, 0, 0.0 ],
+            "payload": [
+                {
+                    "model_type": "planar_lidar",
+                    "model_name": "planar_lidar",
+                    "xyz": [0, 0, 0]
+                },
+                {
+                    "model_name": "front_camera",
+                    "model_type": "hd_camera"
+                }
+            ]
+        }
+    ]
+}
