@@ -16,7 +16,7 @@ With the given Python3 scripts, a few of them allow one to obtain a number of im
 #### mission_Test.py
 The use of **mission_Test.py** allows for image capturing whilst being fully autonomous. This is done by giving the script a number of paramaters before running the code. Once the parameters are given, the script will produce a path through some backend Python3 scritps; which can be found inside the folder. Once script is running, drone will follow path and at each point the drone pauses, an image will be uploaded to the wanted directory. Once path is finished, the option to repeat path will be shown, if one chooses not to repeat path, drone will land safely and shutoff.
 
-Below is an example of how to run the script inside the terminal. Both "y_max and y_min" control the y bounds for the path the drone will take. Argument "num_img" allows for the user to control the num of images along each segment the drone makes. Finally "yaw_angle" controls the yaw of the drone in radians.
+Below is an example of how to run the script inside the terminal. 
 
 ```bash
 python3 mission_Test.py
@@ -65,7 +65,7 @@ python3 save_image.py
 ```
 
 ### Examples of Images
-When doing a calibration, the images used for the calibration are vital. When taking images, take images at different distances and yaws. This will allow for the calibration to have a precise reading of the charuco. Below are examples of different images used for the same calibration.
+When doing a calibration, the images used for the calibration are vital. When taking images, take images at different distances and angles. This will allow for the calibration to have a precise reading of the charuco. Below are examples of different images used for the same calibration.
 
 <img src="./image_taken15.png" width="300" style="margin-bottom: 30px;"/>
 
@@ -88,7 +88,7 @@ Inside the folder, two Python3 scripts help with the calibration process.
 The script **charucoCalib.py** allows for calibration of the images to occur. Takes in images from a specified directoy and follows a calibration process. Once completed, information regarding the calibration will be obtained. Note, when running calibration with large number of images could result in code taking longer to run.
 
 #### camera_info.py
-The script **camera_info** helps the user have info regarding the calibration to be formatted in a seperate yml file. This script uses **charucoCalib** to obtain information regarding the calibration.
+The script **camera_info** helps the user have info regarding the calibration to be formatted in a seperate yaml file. This script uses **charucoCalib** to obtain information regarding the calibration.
 
 Below is an exmaple of how to run the script inside the terminal. Argument "data_dir" allows for the script to know where to take in images from.
 
@@ -98,7 +98,7 @@ Below is an exmaple of how to run the script inside the terminal. Argument "data
 python3 camera_info.py --datadir "./drone_images_auto/"
 ```
 
- Below is an example of the text file writing that would contain all the necessary information for the camera calibration. Note K, R, P are matrices.
+ Below is an example of the yaml file writing that would contain all the necessary information for the camera calibration. Note K, R, P are matrices flattened into a list.
 
 ```plaintext
 Calibration parameters:
