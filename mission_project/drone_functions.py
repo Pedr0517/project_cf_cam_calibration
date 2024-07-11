@@ -1,8 +1,8 @@
 # Drone Functions#
+import argparse
 import matplotlib.pyplot as plt
 import numpy as np
 from drone_path import drone_points
-import argparse
 
 
 def get_points(x_dist: list, y_dist: list, z_dist: list, num_img: int) -> list:
