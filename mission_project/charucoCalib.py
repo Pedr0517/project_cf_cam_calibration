@@ -1,12 +1,9 @@
+import os
+from argparse import ArgumentParser
 import numpy as np
 import cv2
-import PIL
-import os
-from cv2 import aruco
-from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-from argparse import ArgumentParser
 
 
 def read_chessboards(images, minimum_detected_markers, aruco_dict, board):
@@ -23,10 +20,15 @@ def read_chessboards(images, minimum_detected_markers, aruco_dict, board):
     for im in images:
         print("=> Processing image {0}".format(im))
         frame = cv2.imread(im)
+        if frame is None:
+            print(f"Error reading image {im}")
+            continue
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(gray, aruco_dict)
-        if len(ids) < 10:
+
+        if ids is None or len(ids) < 6:  # 10 is no good
             print("Not enough markers found in image {0}".format(im))
+
             continue
 
         if len(corners) > 0:
@@ -58,8 +60,8 @@ def calibrate_camera(allCorners, allIds, imsize, board):
                                  [0., 0., 1.]])
 
     distCoeffsInit = np.zeros((5, 1))
-    flags = (cv2.CALIB_USE_INTRINSIC_GUESS + cv2.CALIB_RATIONAL_MODEL + cv2.CALIB_FIX_ASPECT_RATIO)
     # flags = (cv2.CALIB_USE_INTRINSIC_GUESS + cv2.CALIB_RATIONAL_MODEL + cv2.CALIB_FIX_ASPECT_RATIO)
+    flags = (cv2.CALIB_USE_INTRINSIC_GUESS + cv2.CALIB_RATIONAL_MODEL + cv2.CALIB_FIX_ASPECT_RATIO)
     # flags = (cv2.CALIB_RATIONAL_MODEL)
     (ret, camera_matrix, distortion_coefficients0,
      rotation_vectors, translation_vectors,
@@ -127,7 +129,7 @@ if __name__ == "__main__":
     parser.add_argument("--show-aruco-board", action="store_true", help="Show the aruco board.")
     parser.add_argument("--show-undistorted", action="store_true",
                         help="Show the undistorted images.")
-    parser.add_argument("--minimun-detected-markers", type=int, default=7,
+    parser.add_argument("--minimun-detected-markers", type=int, default=6
                         help="Minimum number of markers to detect in the image.")
     parser.add_argument("--all_distortion_coefficients", action="store_true",
                         help="Show all distortion coefficients.")
@@ -138,6 +140,7 @@ if __name__ == "__main__":
     # board = aruco.CharucoBoard_create(11, 11, .1, .08, aruco_dict)
     aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
     board = cv2.aruco.CharucoBoard((11, 11), .1, .08, aruco_dict)
+    # board = cv2.aruco.CharucoBoard((11, 11), .019, .015, aruco_dict)  # small charuco
     if args.show_aruco_board:
         plot_aruco_board(board)
 
