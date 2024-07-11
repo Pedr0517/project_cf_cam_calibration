@@ -2,9 +2,53 @@ import rclpy
 from as2_python_api.drone_interface import DroneInterface
 from time import sleep
 import argparse
+from sensor_msgs.msg import Image
+import numpy as np
+import os
+import cv2
 
 
-def windmill_mission(drone_inspector: DroneInterface, path_data: list, angle: float):
+class DroneInspector(DroneInterface):
+    def __init__(self, drone_id: str = "drone0", verbose: bool = False, use_sim_time: bool = False):
+        super().__init__(drone_id=drone_id, verbose=verbose, use_sim_time=use_sim_time)
+
+        self.create_subscription(
+            Image, '/drone0/sensor_measurements/front_camera/image_raw', self.image_upload, 10)
+
+        self.i = 0
+
+    def image_upload(self, msg: Image):
+
+        self.image_received = msg
+
+    def save_image(self):
+        self.get_logger().info('Image received')
+
+        # Location and name
+        folder_dir = "windmill_images"
+
+        # Converting ROS images to compatible file
+        image_np = np.frombuffer(self.image_received.data, dtype=np.uint8)
+
+        image_np = image_np.reshape((self.image_received.height,
+                                     self.image_received.width, -1))
+
+        # Location and name
+        image_name = f'image_taken{self.i}.png'
+        image_path = os.path.join(folder_dir, image_name)
+
+        # Checking directory
+        if not os.path.exists(folder_dir):
+            os.makedirs(folder_dir)
+
+        # Adding image to folder
+        cv2.imwrite(image_path, image_np)
+
+        self.get_logger().info('Image uploaded')
+        self.i += 1
+
+
+def windmill_mission(drone_inspector: DroneInspector, path_data: list, angle: float):
 
     speed = 0.5
     takeoff_height = 1.0
@@ -33,6 +77,8 @@ def windmill_mission(drone_inspector: DroneInterface, path_data: list, angle: fl
     for goal in path[0][1]:
         print(f"Go to point {list(goal)}")
         drone_inspector.go_to.go_to_point_with_yaw(list(goal), speed=speed, angle=angle)
+        sleep(sleep_time)
+        drone_inspector.save_image()
         sleep(sleep_time)
     # LANDING#
     print("Landing")
