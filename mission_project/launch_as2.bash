@@ -60,7 +60,7 @@ if [[ ${swarm} == "true" ]]; then
   simulation_config="sim_config/world_swarm.json"
   num_drones=3
 else
-  simulation_config="sim_config/world.json" 
+  simulation_config="sim_config/world_cam_planar_lidar.json" 
   num_drones=1
 fi
 
