@@ -26,7 +26,6 @@ class ImagePublisher(Node):
                  0.03202173470884484, -0.000933797034617021]
 
         msg.k = [949.0586006637827, 0.0, 390.93808171241955,
-        self.param_use_sim_time = Parameter('use_sim_time', Parameter.Type.BOOL, True)
                  0.0, 949.0586006637827, 555.8702679743881,
                  0.0, 0.0, 1.0]
 
