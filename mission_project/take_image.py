@@ -17,7 +17,7 @@ class DroneInspector(DroneInterface):
 
         self.image_received = None
 
-        self.i = 120
+        self.i = 0
 
     def image_upload(self, msg: Image):
         """Receives image data"""
@@ -30,7 +30,7 @@ class DroneInspector(DroneInterface):
         self.get_logger().info('Image received')
 
         # Location and name#
-        folder_dir = "wide03_720_images_manual"
+        folder_dir = "wide03_720_images_manual_retake"
 
         # Checks for foler path#
         if not os.path.exists(folder_dir):
