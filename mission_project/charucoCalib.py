@@ -129,7 +129,7 @@ if __name__ == "__main__":
     parser.add_argument("--show-aruco-board", action="store_true", help="Show the aruco board.")
     parser.add_argument("--show-undistorted", action="store_true",
                         help="Show the undistorted images.")
-    parser.add_argument("--minimun-detected-markers", type=int, default=6
+    parser.add_argument("--minimun-detected-markers", type=int, default=6,
                         help="Minimum number of markers to detect in the image.")
     parser.add_argument("--all_distortion_coefficients", action="store_true",
                         help="Show all distortion coefficients.")

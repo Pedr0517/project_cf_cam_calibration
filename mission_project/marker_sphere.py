@@ -19,7 +19,7 @@ class VisualPublisher(Node):
         msg.header.frame_id = "earth"
         msg.ns = "sphere_shape"
         msg.id = 1
-        msg.type = Marker.SPHERE
+        msg.type = Marker.CUBE
         msg.action = Marker.ADD
         msg.pose.position.x = 5.0
         msg.pose.position.y = 0.0
