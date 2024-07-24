@@ -50,21 +50,23 @@ def path_plot(x_dist: list, y_dist: list, z_dist: list, num_img: int) -> plt:
         y_path.append(data[i][1])
         z_path.append(data[i][2])
 
-    ax.plot3D(x_path, y_path, z_path, color="green")
-    ax.scatter(x_path, y_path, z_path, color="black")
+    ax.plot3D(x_path, y_path, z_path, color="green", label="Drone Path")
+    ax.scatter(x_path, y_path, z_path, color="black", label="Image Captured")
 
     # Charucco Board#
-    # board_x = [5.4, 6.6, 6.6, 5.4, 5.4]  # [min,min,max,max,min]
-    # board_y = [9, 9, 9, 9, 9]  # [min,min,max,max,min]
-    # board_z = [1.2, 1.2, 0, 0, 1.2]
+    board_x = [-0.6, -0.6, 0.6, 0.6, -0.6]
+    board_y = [0, 0, 0, 0, 0]
+    board_z = [0, 1.2, 1.2, 0, 0]
 
-    # ax.plot3D(board_x, board_y, board_z, color="blue")
-    # ax.scatter(board_x, board_y, board_z, color="red")
+    ax.plot3D(board_x, board_y, board_z, color="blue", label="Charuco Board")
+    ax.scatter(board_x, board_y, board_z, color="red")
 
     # Set Labels#
     ax.set_xlabel('x (m)')
     ax.set_ylabel('y (m)')
     ax.set_zlabel('z (m)')
+
+    ax.legend(loc="upper left", bbox_to_anchor=(-0.3, 1.1))
     ax.set_title('3D Drone Path')
 
     return plt.show()
@@ -74,29 +76,32 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Obtain bounds for drone')
 
-    parser.add_argument('--x_max', type=float, default=0.75, help='Max x bound')
-    parser.add_argument('--x_min', type=float, default=0.75, help='Min x bound')
+    parser.add_argument('--x_max', type=float, default=0.60, help='Max x bound')
+    parser.add_argument('--x_min', type=float, default=0.60, help='Min x bound')
 
-    parser.add_argument('--y_max', type=float, default=-0.75, help='Max y bound')
-    parser.add_argument('--y_min', type=float, default=0.75, help='Min y bound')
+    parser.add_argument('--y_dist', type=float, default=1.0, help='y bound')
 
-    parser.add_argument('--z_center', type=float, default=0.5, help='Distance away from center')
+    parser.add_argument('--z_max', type=float, default=0.45, help='Max z bound')
+    parser.add_argument('--z_min', type=float, default=0.45, help='Min z bound')
 
-    parser.add_argument('--num_seg', type=float, default=3, help='Number of segments')
+    parser.add_argument('--num_seg', type=int, default=3, help='Number of segments')
 
-    parser.add_argument('--num_img', type=float, default=3, help='Number of images')
+    parser.add_argument('--num_img', type=int, default=3, help='Number of images')
+
+    parser.add_argument('--yaw_angle', type=float, default=1.57,
+                        help='Yaw drone will take path with')
 
     args = parser.parse_args()
 
-    center_board = [6, 9, 1]  # [x,y,z]
+    center_charruco = [0, 0, 0.6]  # [x,y,z]
 
     # XYZ Bounds#
-    x_dist = np.linspace(center_board[0] + args.x_max,
-                         center_board[0] - args.x_min, args.num_img)
-    y_dist = np.linspace(center_board[1] + args.y_max,
-                         center_board[1] - args.y_min, args.num_img)
-    z_dist = np.linspace(center_board[2] + args.z_center,
-                         center_board[2] - args.z_center, args.num_seg)
+    x_dist = np.linspace(center_charruco[0] + args.x_max,
+                         center_charruco[0] - args.x_min, args.num_img)
+    y_dist = np.linspace(center_charruco[1] - args.y_dist,
+                         center_charruco[1] - args.y_dist, args.num_img)
+    z_dist = np.linspace(center_charruco[2] + args.z_max,
+                         center_charruco[2] - args.z_min, args.num_seg)
 
     num_img = args.num_img
 
